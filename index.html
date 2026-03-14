@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minecraft Education – Lernwelt Guide</title>
+<style>
+  :root {
+    --green: #4CAF50;
+    --green-dark: #2e7d32;
+    --green-light: #e8f5e9;
+    --dirt: #795548;
+    --stone: #546e7a;
+    --sky: #0d47a1;
+    --sky-light: #e3f2fd;
+    --gold: #f9a825;
+    --red: #c62828;
+    --text: #1a1a2e;
+    --muted: #546e7a;
+    --bg: #f5f7fa;
+    --white: #ffffff;
+    --border: #cfd8dc;
+    --code-bg: #1e2a38;
+    --code-text: #a8ff78;
+    --sidebar-w: 280px;
+    --radius: 10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(135deg, #1b5e20 0%, #0d47a1 100%);
+    color: white;
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,.3);
+  }
+  .header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 14px 32px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .header-logo {
+    font-size: 2rem;
+  }
+  .header-title h1 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: .3px;
+  }
+  .header-title p {
+    font-size: .8rem;
+    opacity: .75;
+    margin-top: 1px;
+  }
+  .header-badge {
+    margin-left: auto;
+    background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.3);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+  }
+
+  /* ── LAYOUT ── */
+  .layout {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: var(--sidebar-w) 1fr;
+    gap: 0;
+    min-height: calc(100vh - 60px);
+  }
+
+  /* ── SIDEBAR ── */
+  nav.sidebar {
+    background: var(--white);
+    border-right: 1px solid var(--border);
+    padding: 28px 0;
+    position: sticky;
+    top: 60px;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+  }
+  .sidebar-label {
+    font-size: .68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--muted);
+    padding: 0 20px 8px;
+    margin-top: 12px;
+  }
+  nav.sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 20px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: .85rem;
+    border-left: 3px solid transparent;
+    transition: all .18s;
+  }
+  nav.sidebar a:hover,
+  nav.sidebar a.active {
+    background: var(--green-light);
+    border-left-color: var(--green);
+    color: var(--green-dark);
+    font-weight: 600;
+  }
+  nav.sidebar a .nav-icon { font-size: 1rem; min-width: 20px; text-align: center; }
+  nav.sidebar a .nav-num {
+    font-size: .7rem;
+    font-weight: 700;
+    background: var(--green);
+    color: white;
+    border-radius: 50%;
+    width: 18px; height: 18px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* ── MAIN ── */
+  main {
+    padding: 40px 48px;
+    max-width: 900px;
+  }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #1b5e20, #0d47a1);
+    color: white;
+    border-radius: var(--radius);
+    padding: 40px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '⛏️🧱🌍';
+    position: absolute;
+    right: 30px; top: 20px;
+    font-size: 3.5rem;
+    opacity: .2;
+    letter-spacing: 8px;
+  }
+  .hero h2 { font-size: 1.75rem; margin-bottom: 10px; }
+  .hero p { opacity: .85; max-width: 600px; font-size: .95rem; }
+  .hero-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+  .tag {
+    background: rgba(255,255,255,.18);
+    border: 1px solid rgba(255,255,255,.3);
+    border-radius: 20px;
+    padding: 3px 12px;
+    font-size: .75rem;
+    font-weight: 600;
+  }
+
+  /* Sections */
+  .section {
+    margin-bottom: 52px;
+    scroll-margin-top: 80px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--green);
+  }
+  .section-num {
+    background: var(--green);
+    color: white;
+    font-size: .85rem;
+    font-weight: 800;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .section-header h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--green-dark);
+  }
+  .section-header .section-icon { font-size: 1.5rem; }
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--stone);
+    margin: 22px 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  p { margin-bottom: 12px; font-size: .92rem; }
+
+  /* Cards */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin: 14px 0;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin: 14px 0;
+  }
+  .card.green { border-left: 4px solid var(--green); background: var(--green-light); }
+  .card.blue  { border-left: 4px solid var(--sky); background: var(--sky-light); }
+  .card.gold  { border-left: 4px solid var(--gold); background: #fffde7; }
+  .card.red   { border-left: 4px solid var(--red); background: #ffebee; }
+  .card.dark  { background: #263238; color: #eceff1; border: none; }
+
+  .card h4 {
+    font-size: .88rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .card ul { padding-left: 18px; font-size: .85rem; }
+  .card ul li { margin-bottom: 4px; }
+
+  /* Code blocks */
+  .code-block {
+    background: var(--code-bg);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 12px 0;
+    overflow-x: auto;
+    position: relative;
+  }
+  .code-block .cb-label {
+    font-size: .68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #78909c;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .code-block code {
+    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: .82rem;
+    color: var(--code-text);
+    display: block;
+    line-height: 1.8;
+    white-space: pre;
+  }
+  .code-block code .cmd-comment { color: #546e7a; }
+  .code-block code .cmd-slash { color: #80cbc4; }
+  .code-block code .cmd-keyword { color: #ffcc02; }
+  .code-block code .cmd-value { color: #f48fb1; }
+
+  /* Steps */
+  .steps { counter-reset: step; margin: 14px 0; }
+  .step {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    padding: 16px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 1px 3px rgba(0,0,0,.05);
+  }
+  .step-num {
+    counter-increment: step;
+    background: var(--green);
+    color: white;
+    font-weight: 800;
+    font-size: .85rem;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-content h4 {
+    font-size: .9rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .step-content p { font-size: .85rem; margin: 0; }
+
+  /* Architecture diagram */
+  .arch {
+    background: var(--code-bg);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin: 16px 0;
+    font-family: 'Cascadia Code', 'Consolas', monospace;
+    font-size: .78rem;
+    color: #b0bec5;
+    line-height: 1.9;
+    overflow-x: auto;
+  }
+  .arch .arch-title { color: #ffcc02; font-weight: 700; font-size: .85rem; }
+  .arch .arch-zone { color: #80cbc4; }
+  .arch .arch-block { color: #a8ff78; }
+  .arch .arch-note { color: #78909c; }
+
+  /* Table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .85rem;
+    margin: 14px 0;
+    background: var(--white);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  }
+  th {
+    background: var(--green-dark);
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+  td { padding: 9px 14px; border-bottom: 1px solid var(--border); }
+  tr:last-child td { border: none; }
+  tr:nth-child(even) td { background: #f9fafb; }
+
+  /* Callout */
+  .callout {
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    margin: 14px 0;
+    display: flex;
+    gap: 12px;
+    font-size: .88rem;
+  }
+  .callout.tip  { background: #e8f5e9; border-left: 4px solid var(--green); }
+  .callout.warn { background: #fff8e1; border-left: 4px solid var(--gold); }
+  .callout.info { background: var(--sky-light); border-left: 4px solid var(--sky); }
+  .callout.danger { background: #ffebee; border-left: 4px solid var(--red); }
+  .callout-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+
+  /* Progress bar visual */
+  .progress-visual {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    margin: 10px 0;
+    flex-wrap: wrap;
+  }
+  .pv-block {
+    width: 28px; height: 28px;
+    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,.12);
+    font-size: .65rem;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+  }
+  .pv-block.done { background: var(--green); color: white; }
+  .pv-block.partial { background: var(--gold); color: white; }
+  .pv-block.empty { background: var(--border); color: var(--muted); }
+  .pv-arrow { color: var(--muted); font-size: .9rem; }
+
+  /* TOC */
+  .toc-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin: 16px 0;
+  }
+  .toc-item {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: .82rem;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    cursor: pointer;
+    transition: all .18s;
+    text-decoration: none;
+    color: var(--text);
+  }
+  .toc-item:hover {
+    border-color: var(--green);
+    background: var(--green-light);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0,0,0,.08);
+  }
+  .toc-item .ti-num {
+    font-weight: 800;
+    color: var(--green);
+    font-size: .9rem;
+    flex-shrink: 0;
+  }
+
+  /* Footer */
+  footer {
+    grid-column: 1 / -1;
+    background: var(--code-bg);
+    color: #78909c;
+    text-align: center;
+    padding: 24px;
+    font-size: .8rem;
+    margin-top: 40px;
+  }
+  footer strong { color: #b0bec5; }
+
+  /* Scrollbar */
+  nav.sidebar::-webkit-scrollbar { width: 4px; }
+  nav.sidebar::-webkit-scrollbar-track { background: transparent; }
+  nav.sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    nav.sidebar { display: none; }
+    main { padding: 24px 20px; }
+  }
+
+  @media print {
+    nav.sidebar, header .header-badge { display: none; }
+    main { max-width: 100%; padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-logo">🎮</div>
+    <div class="header-title">
+      <h1>Minecraft Education – Professionelle Lernwelten</h1>
+      <p>Schritt-für-Schritt-Handbuch für Lehrkräfte · Version 1.0</p>
+    </div>
+    <span class="header-badge">Lehrkräfte-Handbuch</span>
+  </div>
+</header>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-label">Inhalt</div>
+  <a href="#intro" class="active"><span class="nav-icon">🏠</span> Einführung</a>
+  <a href="#s1"><span class="nav-num">1</span> Planung der Lektion</a>
+  <a href="#s2"><span class="nav-num">2</span> Technische Vorbereitung</a>
+  <a href="#s3"><span class="nav-num">3</span> Weltstruktur</a>
+  <a href="#s4"><span class="nav-num">4</span> Scoreboards</a>
+  <a href="#s5"><span class="nav-num">5</span> Command Blocks</a>
+  <a href="#s6"><span class="nav-num">6</span> NPCs</a>
+  <a href="#s7"><span class="nav-num">7</span> Absicherung</a>
+  <a href="#s8"><span class="nav-num">8</span> Strukturblöcke</a>
+  <a href="#s9"><span class="nav-num">9</span> Best Practices</a>
+  <a href="#s10"><span class="nav-num">10</span> Export</a>
+  <div class="sidebar-label" style="margin-top:16px">Referenz</div>
+  <a href="#arch"><span class="nav-icon">🗺️</span> Welt-Architektur</a>
+  <a href="#commands"><span class="nav-icon">💻</span> Befehls-Übersicht</a>
+</nav>
+
+<!-- MAIN -->
+<main>
+
+  <!-- HERO -->
+  <div class="hero" id="intro">
+    <h2>Professionelle Unterrichtswelten in Minecraft Education</h2>
+    <p>Dieses Handbuch führt Lehrkräfte Schritt für Schritt durch den gesamten Prozess — von der pädagogischen Planung bis zum exportierten <code>.mcworld</code>-File, das Schülerinnen und Schüler direkt starten können.</p>
+    <div class="hero-tags">
+      <span class="tag">📚 Alle Fächer</span>
+      <span class="tag">🏫 Klassen 4–12</span>
+      <span class="tag">⚙️ Minecraft Edu 1.20+</span>
+      <span class="tag">🎯 Projektorientiert</span>
+    </div>
+  </div>
+
+  <!-- Übersicht -->
+  <div class="toc-overview">
+    <a href="#s1" class="toc-item"><span class="ti-num">01</span>Planung & Lernziele</a>
+    <a href="#s2" class="toc-item"><span class="ti-num">02</span>Technische Vorbereitung</a>
+    <a href="#s3" class="toc-item"><span class="ti-num">03</span>Weltstruktur & Zonen</a>
+    <a href="#s4" class="toc-item"><span class="ti-num">04</span>Scoreboards</a>
+    <a href="#s5" class="toc-item"><span class="ti-num">05</span>Command Blocks</a>
+    <a href="#s6" class="toc-item"><span class="ti-num">06</span>NPCs & Dialoge</a>
+    <a href="#s7" class="toc-item"><span class="ti-num">07</span>Sicherheit & Rollen</a>
+    <a href="#s8" class="toc-item"><span class="ti-num">08</span>Strukturblöcke</a>
+    <a href="#s9" class="toc-item"><span class="ti-num">09</span>Best Practices</a>
+    <a href="#s10" class="toc-item"><span class="ti-num">10</span>Export</a>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 1 -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">1</span>
+      <span class="section-icon">📋</span>
+      <h2>Planung der Lektion</h2>
+    </div>
+
+    <p>Bevor du auch nur einen Block in Minecraft setzt, muss die <strong>didaktische Grundstruktur</strong> stehen. Eine gut geplante Lernwelt reduziert Chaos im Unterricht drastisch und erlaubt dir, die Lernprozesse zu beobachten, statt ständig technische Feuer zu löschen.</p>
+
+    <h3>🎯 Lernziele definieren</h3>
+    <p>Formuliere 3–5 konkrete, messbare Lernziele im Stil von Lehrplänen:</p>
+
+    <div class="card-grid">
+      <div class="card green">
+        <h4>✅ Gutes Lernziel</h4>
+        <p style="font-size:.83rem">„SuS können die drei Aggregatzustände benennen und je ein Beispiel nennen."</p>
+        <p style="font-size:.78rem;color:var(--muted);margin:0">Messbar · Konkret · Überprüfbar</p>
+      </div>
+      <div class="card red">
+        <h4>❌ Schwaches Lernziel</h4>
+        <p style="font-size:.83rem">„SuS lernen etwas über Wasser und Physik."</p>
+        <p style="font-size:.78rem;color:var(--muted);margin:0">Zu vage · Nicht überprüfbar</p>
+      </div>
+    </div>
+
+    <h3>📖 Kapitelstruktur planen</h3>
+    <p>Teile die Lernwelt in <strong>Module</strong> auf. Jedes Modul entspricht einer Zone in der Welt und einem Lernziel:</p>
+
+    <table>
+      <thead><tr><th>Modul</th><th>Zone in der Welt</th><th>Lernziel</th><th>Dauer</th></tr></thead>
+      <tbody>
+        <tr><td>M0 – Intro</td><td>Spawn-Bereich</td><td>Orientierung, Regeln</td><td>~5 min</td></tr>
+        <tr><td>M1 – Grundlagen</td><td>Zone Grün</td><td>Basiswissen erarbeiten</td><td>~15 min</td></tr>
+        <tr><td>M2 – Vertiefung</td><td>Zone Blau</td><td>Zusammenhänge verstehen</td><td>~15 min</td></tr>
+        <tr><td>M3 – Anwendung</td><td>Zone Rot</td><td>Transfer & Problemlösung</td><td>~20 min</td></tr>
+        <tr><td>M4 – Test</td><td>Testbereich</td><td>Kompetenzüberprüfung</td><td>~10 min</td></tr>
+      </tbody>
+    </table>
+
+    <h3>🏆 Fortschrittssystem designen</h3>
+    <p>Minecraft Education bietet <strong>Scoreboards</strong> als Fortschrittsanzeige. Plane vorab, welche Aktionen Punkte geben:</p>
+
+    <div class="progress-visual">
+      <div class="pv-block done">M0</div>
+      <div class="pv-arrow">→</div>
+      <div class="pv-block done">M1</div>
+      <div class="pv-arrow">→</div>
+      <div class="pv-block partial">M2</div>
+      <div class="pv-arrow">→</div>
+      <div class="pv-block empty">M3</div>
+      <div class="pv-arrow">→</div>
+      <div class="pv-block empty">M4</div>
+    </div>
+    <p style="font-size:.78rem;color:var(--muted)">Beispiel: SuS hat Module 0+1 abgeschlossen, ist in Modul 2.</p>
+
+    <div class="callout tip">
+      <span class="callout-icon">💡</span>
+      <div><strong>Praxis-Tipp:</strong> Plane das Fortschrittssystem auf Papier, bevor du anfängst zu bauen. Ändere es später in Minecraft zu ändern kostet viel Zeit.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 2 -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">2</span>
+      <span class="section-icon">⚙️</span>
+      <h2>Technische Vorbereitung der Welt</h2>
+    </div>
+
+    <p>Eine korrekt konfigurierte Welt ist das Fundament. Fehleinstellungen führen zu unkontrollierbarem Verhalten der SuS oder kaputten Command-Block-Systemen.</p>
+
+    <h3>🌍 Neue Welt anlegen</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>Spielmodus: Abenteuer oder Überleben?</h4>
+          <p>Für Lernwelten empfohlen: <strong>Abenteuer-Modus</strong>. SuS können Blöcke nur mit Werkzeug abbauen, das speziell erlaubt ist → kein ungewolltes Zerstören.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>Cheats / Befehle aktivieren</h4>
+          <p>Für Command Blocks und NPC-Skripte <strong>müssen Cheats aktiviert sein</strong>. Gehe zu: Welt bearbeiten → Spieloptionen → Cheats: AN</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>Welttyp: Superflach</h4>
+          <p>Wähle <strong>Superflache Welt</strong> als Typ. Das gibt dir eine saubere, leere Fläche ohne Berge, Höhlen oder zufällige Mobs — ideal zum Bauen.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>Schwierigkeit: Friedlich</h4>
+          <p>Stelle <strong>Friedlich</strong> ein, damit keine feindlichen Mobs spawnen und SuS sich auf die Lerninhalte konzentrieren können.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <h4>Wetter & Tag/Nacht</h4>
+          <p>Deaktiviere Wetterwechsel und den Tages-/Nachtzyklus für konstante Sichtverhältnisse.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>👥 Rollen im Überblick</h3>
+    <table>
+      <thead><tr><th>Rolle</th><th>Berechtigungen</th><th>Wann vergeben?</th></tr></thead>
+      <tbody>
+        <tr><td>🔴 Operator</td><td>Alle Befehle, alle Blöcke, alle Rechte</td><td>Nur Lehrkraft</td></tr>
+        <tr><td>🟡 Worldbuilder</td><td>Kann Barriere-Blöcke platzieren/entfernen</td><td>Lehrkraft-Assistenz</td></tr>
+        <tr><td>🟢 Member</td><td>Standard-SuS: nur erlaubte Aktionen</td><td>Alle SuS</td></tr>
+        <tr><td>⚪ Visitor</td><td>Nur Beobachten, kein Bauen</td><td>Gäste / Demos</td></tr>
+      </tbody>
+    </table>
+
+    <div class="code-block">
+      <div class="cb-label">💬 Befehle · Rollen vergeben</div>
+      <code><span class="cmd-comment"># Lehrkraft als Operator setzen</span>
+<span class="cmd-slash">/op</span> <span class="cmd-keyword">LehrerName</span>
+
+<span class="cmd-comment"># SuS als Member setzen (Standard)</span>
+<span class="cmd-slash">/deop</span> <span class="cmd-keyword">SchuelerName</span>
+
+<span class="cmd-comment"># Worldbuilder-Rolle vergeben</span>
+<span class="cmd-slash">/worldbuilder</span> <span class="cmd-keyword">AssistenzName</span></code>
+    </div>
+
+    <div class="callout warn">
+      <span class="callout-icon">⚠️</span>
+      <div><strong>Wichtig:</strong> Gib niemals SuS Operator-Rechte in einer Unterrichtswelt. Selbst vertrauenswürdige SuS können aus Versehen Command Blocks zerstören oder Scoreboards zurücksetzen.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 3 -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">3</span>
+      <span class="section-icon">🗺️</span>
+      <h2>Aufbau einer modularen Weltstruktur</h2>
+    </div>
+
+    <p>Eine professionelle Lernwelt folgt einer <strong>konsistenten, räumlichen Logik</strong>, die SuS intuitiv navigieren können, ohne sich zu verlaufen.</p>
+
+    <h3>🏗️ Empfohlene Welt-Architektur</h3>
+
+    <div class="arch" id="arch">
+<span class="arch-title">LERNWELT · GRUNDRISS (Vogelperspektive)</span>
+<span class="arch-note">─────────────────────────────────────────────────────────</span>
+
+<span class="arch-zone">                    SPAWN-BEREICH</span>
+<span class="arch-block">            ┌───────────────────────────────┐</span>
+<span class="arch-block">            │  🏫  Einstiegshalle            │</span>
+<span class="arch-block">            │  📜 Regeln · 🗺️ Karte · 🎯 Ziele │</span>
+<span class="arch-block">            │  🔒 Eingangstür (gesperrt)     │</span>
+<span class="arch-block">            └───────────────┬───────────────┘</span>
+                            │ Hauptweg
+<span class="arch-zone">         ┌──────────────────┴──────────────────┐</span>
+<span class="arch-zone">         ▼                                   ▼</span>
+<span class="arch-block">   ┌─────────────┐                    ┌──────────────┐</span>
+<span class="arch-block">   │  ZONE 1     │                    │   ZONE 2     │</span>
+<span class="arch-block">   │  🟢 Grün    │                    │   🔵 Blau    │</span>
+<span class="arch-block">   │  Grundlagen │───────────────────►│  Vertiefung  │</span>
+<span class="arch-block">   │  NPC · Quiz │                    │  Experiment  │</span>
+<span class="arch-block">   └─────────────┘                    └──────┬───────┘</span>
+                                             │
+<span class="arch-block">                                      ┌──────▼───────┐</span>
+<span class="arch-block">                                      │   ZONE 3     │</span>
+<span class="arch-block">                                      │   🔴 Rot     │</span>
+<span class="arch-block">                                      │  Anwendung   │</span>
+<span class="arch-block">                                      │  Bauprojekt  │</span>
+<span class="arch-block">                                      └──────┬───────┘</span>
+                                             │
+<span class="arch-block">                              ┌──────────────▼──────────────┐</span>
+<span class="arch-block">                              │        TESTBEREICH          │</span>
+<span class="arch-block">                              │  📝 Quiz · 🏆 Scoreboard    │</span>
+<span class="arch-block">                              │  🔒 Nur bei Freischaltung   │</span>
+<span class="arch-block">                              └─────────────────────────────┘</span>
+
+<span class="arch-note">         ↑ Separater Bereich (unsichtbar für SuS)</span>
+<span class="arch-block">┌──────────────────────────────────────┐</span>
+<span class="arch-block">│  LEHRKRAFT-BEREICH (unter Y=0)       │</span>
+<span class="arch-block">│  ⚡ Command Blocks · 💾 Datenspeicher │</span>
+<span class="arch-block">│  🔧 Wartung · 🔄 Reset-System        │</span>
+<span class="arch-block">└──────────────────────────────────────┘</span></div>
+
+    <h3>📐 Koordinatensystem & Abstände</h3>
+    <div class="card-grid">
+      <div class="card blue">
+        <h4>🌐 Spawn-Bereich</h4>
+        <ul>
+          <li>Koordinate: X=0, Z=0, Y=65</li>
+          <li>Größe: ca. 20×20 Blöcke</li>
+          <li>Enthält: Karte, Regeln, NPC</li>
+        </ul>
+      </div>
+      <div class="card green">
+        <h4>🟢 Zone 1 (Grundlagen)</h4>
+        <ul>
+          <li>Koordinate: X=+40, Z=0</li>
+          <li>Größe: ca. 30×30 Blöcke</li>
+          <li>Farbcode: Grüne Blöcke/Böden</li>
+        </ul>
+      </div>
+      <div class="card blue">
+        <h4>🔵 Zone 2 (Vertiefung)</h4>
+        <ul>
+          <li>Koordinate: X=+80, Z=0</li>
+          <li>Größe: ca. 30×30 Blöcke</li>
+          <li>Farbcode: Blaue Blöcke/Böden</li>
+        </ul>
+      </div>
+      <div class="card gold">
+        <h4>🔴 Zone 3 (Anwendung)</h4>
+        <ul>
+          <li>Koordinate: X=+120, Z=0</li>
+          <li>Größe: ca. 40×40 Blöcke</li>
+          <li>Farbcode: Rote/orangefarbene Böden</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>🔒 Türen zwischen Zonen</h3>
+    <p>SuS können Zonen <strong>nur in der richtigen Reihenfolge</strong> betreten. Türen öffnen sich per Command Block, wenn das Scoreboard die nötige Punktzahl zeigt:</p>
+
+    <div class="code-block">
+      <div class="cb-label">🔑 Command Block · Tür öffnen wenn Modul 1 abgeschlossen</div>
+      <code><span class="cmd-comment"># Bedingungs-Block (konditionell) - prüft Score</span>
+<span class="cmd-slash">/execute</span> <span class="cmd-keyword">if score</span> <span class="cmd-value">@p Fortschritt</span> <span class="cmd-keyword">matches</span> <span class="cmd-value">1..</span> <span class="cmd-keyword">run</span>
+  <span class="cmd-slash">setblock</span> <span class="cmd-value">~0 ~1 ~0 air</span>
+
+<span class="cmd-comment"># Oder: Spawnpunkt setzen wenn in Zone angekommen</span>
+<span class="cmd-slash">/execute</span> <span class="cmd-keyword">as @a[x=38,y=64,z=-2,dx=4,dy=3,dz=4]</span>
+  <span class="cmd-keyword">run</span> <span class="cmd-slash">spawnpoint</span> <span class="cmd-value">@s 40 65 0</span></code>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 4 -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">4</span>
+      <span class="section-icon">📊</span>
+      <h2>Scoreboards für Fortschritt und Aufgaben</h2>
+    </div>
+
+    <p>Scoreboards sind das <strong>Nervensystem</strong> deiner Lernwelt. Sie tracken Punkte, Aufgaben-Status, freigeschaltete Zonen und können sogar Zeitlimits messen.</p>
+
+    <h3>🛠️ Scoreboard anlegen</h3>
+    <div class="code-block">
+      <div class="cb-label">💻 Scoreboard-Setup · Einmalig beim Start</div>
+      <code><span class="cmd-comment"># Haupt-Fortschritts-Scoreboard erstellen</span>
+<span class="cmd-slash">/scoreboard objectives add</span> <span class="cmd-keyword">Fortschritt</span> <span class="cmd-value">dummy</span> <span class="cmd-value">"📊 Mein Fortschritt"</span>
+
+<span class="cmd-comment"># Aufgaben-Scoreboard (0=offen, 1=erledigt)</span>
+<span class="cmd-slash">/scoreboard objectives add</span> <span class="cmd-keyword">Aufgaben</span> <span class="cmd-value">dummy</span> <span class="cmd-value">"✅ Aufgaben"</span>
+
+<span class="cmd-comment"># Scoreboard auf der Seite anzeigen</span>
+<span class="cmd-slash">/scoreboard objectives setdisplay</span> <span class="cmd-keyword">sidebar</span> <span class="cmd-value">Fortschritt</span>
+
+<span class="cmd-comment"># Punkte einem Spieler manuell geben (Test)</span>
+<span class="cmd-slash">/scoreboard players add</span> <span class="cmd-keyword">@a</span> <span class="cmd-value">Fortschritt 1</span>
+
+<span class="cmd-comment"># Score eines Spielers zurücksetzen</span>
+<span class="cmd-slash">/scoreboard players set</span> <span class="cmd-keyword">@a</span> <span class="cmd-value">Fortschritt 0</span>
+
+<span class="cmd-comment"># Score anzeigen lassen (für Lehrkraft)</span>
+<span class="cmd-slash">/scoreboard players list</span></code>
+    </div>
+
+    <h3>🎯 Fortschrittspunkte automatisch vergeben</h3>
+    <p>Platziere Command Blocks in jeder Zone. Sie prüfen permanent, ob SuS in der Nähe sind und vergeben Punkte:</p>
+
+    <div class="code-block">
+      <div class="cb-label">⚡ Repeat-Command-Block (läuft jede Sekunde)</div>
+      <code><span class="cmd-comment"># Spieler in Zone 1 erkannt → Aufgabe 1 als erledigt markieren</span>
+<span class="cmd-slash">/execute</span> <span class="cmd-keyword">as @a[x=30,y=64,z=-15,dx=20,dy=5,dz=20]</span>
+  <span class="cmd-keyword">if score @s Aufgaben1 matches 0</span>
+  <span class="cmd-keyword">run</span> <span class="cmd-slash">scoreboard players set</span> <span class="cmd-value">@s Aufgaben1 1</span>
+
+<span class="cmd-comment"># Wenn Aufgabe1=1 UND Aufgabe2=1 → Modul abgeschlossen</span>
+<span class="cmd-slash">/execute</span> <span class="cmd-keyword">as @a</span>
+  <span class="cmd-keyword">if score @s Aufgaben1 matches 1</span>
+  <span class="cmd-keyword">if score @s Aufgaben2 matches 1</span>
+  <span class="cmd-keyword">run</span> <span class="cmd-slash">scoreboard players add</span> <span class="cmd-value">@s Fortschritt 1</span></code>
+    </div>
+
+    <div class="callout info">
+      <span class="callout-icon">ℹ️</span>
+      <div><strong>Scoreboard-Struktur empfohlen:</strong> Nutze separate Scoreboards für <em>Fortschritt</em>, <em>Quiz-Punkte</em> und <em>Zeit</em>. Mische nicht alles in einem — das macht Debugging viel einfacher.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 5 -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">5</span>
+      <span class="section-icon">⚡</span>
+      <h2>Command Blocks: Türen, Bedingungen, Automatisierung</h2>
+    </div>
+
+    <p>Command Blocks sind die <strong>Logik-Schicht</strong> deiner Welt. Verstehe die drei Typen, bevor du anfängst:</p>
+
+    <div class="card-grid">
+      <div class="card green">
+        <h4>🟧 Impulse-Block</h4>
+        <ul>
+          <li>Läuft <strong>einmal</strong> pro Aktivierung</li>
+          <li>Für: Türen öffnen, Items geben</li>
+          <li>Trigger: Redstone-Signal</li>
+        </ul>
+      </div>
+      <div class="card blue">
+        <h4>🟦 Repeat-Block</h4>
+        <ul>
+          <li>Läuft <strong>dauerhaft</strong> (20×/sek.)</li>
+          <li>Für: Score-Checks, Positions-Checks</li>
+          <li>Trigger: Immer aktiv</li>
+        </ul>
+      </div>
+      <div class="card gold">
+        <h4>🟩 Chain-Block</h4>
+        <ul>
+          <li>Läuft nach dem <strong>vorherigen Block</strong></li>
+          <li>Für: Mehrstufige Aktionen</li>
+          <li>Reihenfolge beachten</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>🚪 Automatische Türen</h3>
+    <div class="code-block">
+      <div class="cb-label">🚪 Tür öffnen/schließen · Druckplatte → Command Block</div>
+      <code><span class="cmd-comment"># Tür öffnen: Eisentor entfernen (Block ersetzen durch Luft)</span>
+<span class="cmd-slash">/setblock</span> <span class="cmd-value">40 65 0</span> <span class="cmd-keyword">air</span>
+<span class="cmd-slash">/setblock</span> <span class="cmd-value">40 66 0</span> <span class="cmd-keyword">air</span>
+
+<span class="cmd-comment"># Spieler teleportieren wenn Score ausreicht</span>
+<span class="cmd-slash">/execute</span> <span class="cmd-keyword">if score @p Fortschritt matches 1..</span>
+  <span class="cmd-keyword">run</span> <span class="cmd-slash">tp</span> <span class="cmd-value">@p 42 65 0</span>
+
+<span class="cmd-comment"># Nachricht wenn Score NICHT ausreicht</span>
+<span class="cmd-slash">/execute</span> <span class="cmd-keyword">unless score @p Fortschritt matches 1..</span>
+  <span class="cmd-keyword">run</span> <span class="cmd-slash">tellraw</span> <span class="cmd-value">@p</span>
+  <span class="cmd-value">{"text":"🔒 Schließe zuerst Zone 1 ab!","color":"red"}</span></code>
+    </div>
+
+    <h3>📢 Nachrichten und Hinweise</h3>
+    <div class="code-block">
+      <div class="cb-label">💬 Nachrichten an SuS senden</div>
+      <code><span class="cmd-comment"># Einfache Chatnachricht an alle</span>
+<span class="cmd-slash">/say</span> <span class="cmd-value">Willkommen in Zone 2! Lies das Schild links.</span>
+
+<span class="cmd-comment"># Formatierte Nachricht (JSON) nur an Spieler in der Nähe</span>
+<span class="cmd-slash">/tellraw</span> <span class="cmd-keyword">@a[r=10]</span>
+  <span class="cmd-value">{"text":"✅ Aufgabe 1 erledigt! +1 Punkt","color":"green","bold":true}</span>
+
+<span class="cmd-comment"># Titel-Einblendung (groß im Bildschirmzentrum)</span>
+<span class="cmd-slash">/title</span> <span class="cmd-keyword">@a</span> <span class="cmd-value">title</span>
+  <span class="cmd-value">{"text":"🏆 Modul abgeschlossen!","color":"gold"}</span>
+<span class="cmd-slash">/title</span> <span class="cmd-keyword">@a</span> <span class="cmd-value">subtitle</span>
+  <span class="cmd-value">{"text":"Weiter zu Zone 2","color":"white"}</span></code>
+    </div>
+
+    <h3>🎒 Items vergeben</h3>
+    <div class="code-block">
+      <div class="cb-label">📦 Items an SuS geben</div>
+      <code><span class="cmd-comment"># Buch als Aufgabenblatt geben</span>
+<span class="cmd-slash">/give</span> <span class="cmd-keyword">@p</span> <span class="cmd-value">written_book 1 0</span>
+  <span class="cmd-value">{"title":"Aufgabenblatt M1","author":"Frau Muster",</span>
+   <span class="cmd-value">"pages":["Lies die drei Schilder und beantworte..."]}</span>
+
+<span class="cmd-comment"># Werkzeug mit eingeschränkter Nutzung</span>
+<span class="cmd-slash">/give</span> <span class="cmd-keyword">@p</span> <span class="cmd-value">wooden_pickaxe 1 0</span>
+  <span class="cmd-value">{"CanDestroy":["stone","dirt"]}</span></code>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-icon">💡</span>
+      <div><strong>Tipp:</strong> Platziere alle Command Blocks unter der Erde (Y = 10–50), damit SuS sie weder sehen noch versehentlich zerstören können.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 6 -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">6</span>
+      <span class="section-icon">🤖</span>
+      <h2>NPCs: Aufgaben, Hinweise und Interaktion</h2>
+    </div>
+
+    <p>NPCs (Non-Player Characters) sind die <strong>virtuellen Lehrassistenten</strong> deiner Welt. Sie können Aufgaben erklären, Hinweise geben, Punkte vergeben und sogar Befehle ausführen.</p>
+
+    <h3>👾 NPC erstellen und konfigurieren</h3>
+    <div class="code-block">
+      <div class="cb-label">🧍 NPC spawnen</div>
+      <code><span class="cmd-comment"># NPC an aktueller Position spawnen</span>
+<span class="cmd-slash">/summon</span> <span class="cmd-keyword">npc</span> <span class="cmd-value">~ ~ ~</span> <span class="cmd-value">"Prof. Block"</span>
+
+<span class="cmd-comment"># NPC an bestimmten Koordinaten spawnen</span>
+<span class="cmd-slash">/summon</span> <span class="cmd-keyword">npc</span> <span class="cmd-value">42 65 5</span> <span class="cmd-value">"Tutor Steini"</span></code>
+    </div>
+
+    <p>Klicke auf den NPC, um das NPC-Menü zu öffnen. Dort kannst du einstellen:</p>
+
+    <div class="card-grid">
+      <div class="card green">
+        <h4>💬 Dialog-Text</h4>
+        <p style="font-size:.82rem">Schreibe erklärende Texte, Aufgabenbeschreibungen oder Hinweise. Unterstützt Zeilenumbrüche mit <code>\n</code>.</p>
+      </div>
+      <div class="card blue">
+        <h4>🔘 Schaltflächen</h4>
+        <p style="font-size:.82rem">Bis zu 6 Schaltflächen pro NPC, jede kann einen Befehl ausführen: URL öffnen, Befehl im Hintergrund, NPC schließen.</p>
+      </div>
+      <div class="card gold">
+        <h4>🎨 Aussehen</h4>
+        <p style="font-size:.82rem">Wähle Skin aus der Bibliothek oder lade einen eigenen hoch. Name über dem NPC ist sichtbar.</p>
+      </div>
+    </div>
+
+    <h3>📋 NPC-Aufgaben-System</h3>
+    <p>Beispiel: NPC gibt Aufgabe, prüft Lösung via Befehl:</p>
+
+    <div class="card dark">
+      <h4 style="color:#ffcc02;font-size:.9rem">📝 NPC-Konfiguration: "Quiz-NPC Zone 1"</h4>
+      <div style="margin-top:8px">
+        <p style="font-size:.8rem;color:#90caf9;margin-bottom:6px"><strong>Dialog-Text:</strong></p>
+        <p style="font-size:.8rem;color:#a8ff78;font-family:monospace;line-height:1.6">
+          Hallo! Ich bin dein Aufgaben-NPC.<br>
+          Deine Aufgabe: Finde die 3 roten Schilder in dieser Zone<br>
+          und merke dir, was drauf steht!<br><br>
+          Wenn du alle 3 gefunden hast, klicke auf "Fertig"!
+        </p>
+        <p style="font-size:.8rem;color:#90caf9;margin-top:10px;margin-bottom:6px"><strong>Schaltfläche "Fertig" → Befehl:</strong></p>
+        <p style="font-size:.8rem;color:#a8ff78;font-family:monospace">
+          /scoreboard players set @initiator Aufgaben1 1<br>
+          /title @initiator title {"text":"✅ Super!","color":"green"}<br>
+          /scoreboard players add @initiator Fortschritt 1
+        </p>
+      </div>
+    </div>
+
+    <h3>📚 NPC-Rollen in der Lernwelt</h3>
+    <table>
+      <thead><tr><th>NPC-Typ</th><th>Position</th><th>Funktion</th></tr></thead>
+      <tbody>
+        <tr><td>🏫 Willkommens-NPC</td><td>Spawn</td><td>Regeln, Orientierung, Welteinführung</td></tr>
+        <tr><td>📖 Erklärungs-NPC</td><td>Anfang jeder Zone</td><td>Lerninhalt einführen, Aufgaben erklären</td></tr>
+        <tr><td>💡 Hinweis-NPC</td><td>Mitte jeder Zone</td><td>Tipps bei Schwierigkeiten, Scaffold</td></tr>
+        <tr><td>✅ Check-NPC</td><td>Ende jeder Zone</td><td>Aufgaben abnahmen, Punkte vergeben</td></tr>
+        <tr><td>🏆 Abschluss-NPC</td><td>Testbereich</td><td>Herzlichen Glückwunsch, Zertifikat</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 7 -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">7</span>
+      <span class="section-icon">🛡️</span>
+      <h2>Absicherung von Bereichen</h2>
+    </div>
+
+    <p>Ohne klare Grenzen werden SuS über kurz oder lang in ungewollte Bereiche gelangen — oder die Struktur zerstören. Nutze alle verfügbaren Mechanismen zur Absicherung.</p>
+
+    <h3>🧱 Barriere-Blöcke</h3>
+    <p>Barriere-Blöcke sind unsichtbar für SuS, blockieren aber Bewegung vollständig. Ideal für unsichtbare Wände:</p>
+
+    <div class="code-block">
+      <div class="cb-label">🚧 Barriere-Blöcke platzieren</div>
+      <code><span class="cmd-comment"># Einzelnen Barriere-Block setzen</span>
+<span class="cmd-slash">/setblock</span> <span class="cmd-value">~ ~ ~</span> <span class="cmd-keyword">barrier</span>
+
+<span class="cmd-comment"># Linie aus Barriere-Blöcken (Breite 1, Länge 20)</span>
+<span class="cmd-slash">/fill</span> <span class="cmd-value">0 65 -10</span> <span class="cmd-value">0 70 10</span> <span class="cmd-keyword">barrier</span>
+
+<span class="cmd-comment"># Komplette unsichtbare Box um eine Zone</span>
+<span class="cmd-slash">/fill</span> <span class="cmd-value">30 64 -15</span> <span class="cmd-value">70 80 15</span> <span class="cmd-keyword">barrier</span> <span class="cmd-value">0 outline</span>
+
+<span class="cmd-comment"># Barrieren sichtbar machen (nur für Worldbuilder/OP)</span>
+<span class="cmd-comment"># Barrieren erscheinen als rote Blöcke mit X im Kreativ-Modus</span></code>
+    </div>
+
+    <h3>🚫 Befehlssperren</h3>
+    <div class="code-block">
+      <div class="cb-label">🔒 SuS-Berechtigungen einschränken</div>
+      <code><span class="cmd-comment"># SuS können keine Blöcke in Zone 1 abbauen</span>
+<span class="cmd-slash">/gamemode</span> <span class="cmd-keyword">adventure</span> <span class="cmd-value">@a[tag=!lehrer]</span>
+
+<span class="cmd-comment"># Fliegen für alle SuS deaktivieren</span>
+<span class="cmd-slash">/ability</span> <span class="cmd-keyword">@a[tag=!lehrer]</span> <span class="cmd-value">mayfly false</span>
+
+<span class="cmd-comment"># Bauen/Abbauen für alle SuS deaktivieren</span>
+<span class="cmd-slash">/ability</span> <span class="cmd-keyword">@a[tag=!lehrer]</span> <span class="cmd-value">mute false</span>
+
+<span class="cmd-comment"># SuS können keine Befehle nutzen</span>
+<span class="cmd-slash">/ability</span> <span class="cmd-keyword">@a[tag=!lehrer]</span> <span class="cmd-value">operator false</span></code>
+    </div>
+
+    <h3>🗺️ Weltgrenze setzen</h3>
+    <div class="code-block">
+      <div class="cb-label">🌍 Weltbegrenzung</div>
+      <code><span class="cmd-comment"># Weltgrenze auf 200 Blöcke Radius setzen</span>
+<span class="cmd-slash">/worldborder set</span> <span class="cmd-value">200</span>
+
+<span class="cmd-comment"># Warngrenze anzeigen (ab 50 Blöcke vor Grenze)</span>
+<span class="cmd-slash">/worldborder warning distance</span> <span class="cmd-value">50</span></code>
+    </div>
+
+    <div class="callout danger">
+      <span class="callout-icon">🚨</span>
+      <div><strong>Sicherheits-Checkliste vor dem Unterricht:</strong> Teste die Welt <em>als normaler SuS</em> (deop dich selbst temporär). Versuche aktiv, Bereiche zu erreichen, die gesperrt sein sollten. Finde Lücken, bevor es die SuS tun.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 8 -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">8</span>
+      <span class="section-icon">🧩</span>
+      <h2>Strukturblöcke für wiederverwendbare Module</h2>
+    </div>
+
+    <p>Strukturblöcke (Structure Blocks) erlauben dir, <strong>Gebäude zu speichern und beliebig oft einzufügen</strong>. Perfekt für Quiz-Räume, Aufgaben-Stationen und Klassenzimmer-Templates.</p>
+
+    <h3>🔧 Strukturblock aktivieren</h3>
+    <div class="code-block">
+      <div class="cb-label">🧱 Strukturblock in der Hand</div>
+      <code><span class="cmd-comment"># Strukturblock erhalten (nur im Kreativ-Modus)</span>
+<span class="cmd-slash">/give</span> <span class="cmd-keyword">@s</span> <span class="cmd-value">structure_block</span>
+
+<span class="cmd-comment"># Oder per Befehl direkt setzen</span>
+<span class="cmd-slash">/setblock</span> <span class="cmd-value">~ ~ ~</span> <span class="cmd-keyword">structure_block</span></code>
+    </div>
+
+    <h3>💾 Struktur speichern und laden</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>Struktur speichern</h4>
+          <p>Platziere Strukturblock → Modus „Speichern" → Namen vergeben (z.B. <code>quiz_raum_1</code>) → Größe einstellen → Exportieren klicken.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>Struktur laden</h4>
+          <p>Neuen Strukturblock → Modus „Laden" → Namen eingeben → „Laden" → Struktur erscheint als Vorschau → Bestätigen.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>Per Befehl laden (automatisch)</h4>
+          <p>Für automatisches Laden per Command Block: <code>/structure load quiz_raum_1 ~ ~ ~</code></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="cb-label">📦 Struktur per Befehl laden</div>
+      <code><span class="cmd-comment"># Struktur an bestimmter Position laden</span>
+<span class="cmd-slash">/structure load</span> <span class="cmd-keyword">quiz_raum_1</span> <span class="cmd-value">40 65 20</span>
+
+<span class="cmd-comment"># Struktur mit Rotation laden</span>
+<span class="cmd-slash">/structure load</span> <span class="cmd-keyword">aufgaben_station</span> <span class="cmd-value">80 65 0</span> <span class="cmd-value">0_degrees none false true</span>
+
+<span class="cmd-comment"># Struktur löschen (für Reset)</span>
+<span class="cmd-slash">/structure delete</span> <span class="cmd-keyword">quiz_raum_1</span></code>
+    </div>
+
+    <h3>📁 Empfohlene Struktur-Bibliothek</h3>
+    <div class="card-grid">
+      <div class="card">
+        <h4>🏠 Basis-Module</h4>
+        <ul>
+          <li><code>spawn_halle</code> – Einstiegsbereich</li>
+          <li><code>npc_station</code> – Aufgaben-Station</li>
+          <li><code>quiz_raum</code> – Multiple-Choice-Raum</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>🎓 Lern-Module</h4>
+        <ul>
+          <li><code>lernzone_basis</code> – Leeres Modul</li>
+          <li><code>laboraufbau</code> – Experiment-Setup</li>
+          <li><code>bauprojekt</code> – Anwendungszone</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>⚙️ Technik-Module</h4>
+        <ul>
+          <li><code>scoreboard_init</code> – CB-Block-Setup</li>
+          <li><code>tuer_system</code> – Tür-Mechanik</li>
+          <li><code>reset_system</code> – Welt-Reset</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 9 -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">9</span>
+      <span class="section-icon">🎓</span>
+      <h2>Best Practices für den Unterricht</h2>
+    </div>
+
+    <h3>👩‍🏫 Klassenmanagement</h3>
+    <div class="card-grid">
+      <div class="card green">
+        <h4>✅ Vor der Stunde</h4>
+        <ul>
+          <li>Welt auf Reset-Stand bringen</li>
+          <li>Alle Scoreboards auf 0 setzen</li>
+          <li>Test-Durchlauf als Member machen</li>
+          <li>Backup der Welt anlegen</li>
+        </ul>
+      </div>
+      <div class="card blue">
+        <h4>📋 Während der Stunde</h4>
+        <ul>
+          <li>Scoreboard-Übersicht im Blick</li>
+          <li>Fortschritt einzelner SuS prüfen</li>
+          <li>Bei Problemen: <code>/tp</code> nutzen</li>
+          <li>Chat-Log beobachten</li>
+        </ul>
+      </div>
+      <div class="card gold">
+        <h4>📊 Nach der Stunde</h4>
+        <ul>
+          <li>Scoreboard-Screenshot machen</li>
+          <li>Welt als Backup speichern</li>
+          <li>Feedback der SuS notieren</li>
+          <li>Schwachstellen dokumentieren</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>📡 Lehrkraft-Werkzeuge</h3>
+    <div class="code-block">
+      <div class="cb-label">🛠️ Nützliche Befehle für die Lehrkraft</div>
+      <code><span class="cmd-comment"># Alle SuS zu mir teleportieren (Sammeln)</span>
+<span class="cmd-slash">/tp</span> <span class="cmd-keyword">@a</span> <span class="cmd-value">@s</span>
+
+<span class="cmd-comment"># Spieler einfrieren (für Erklärungsphasen)</span>
+<span class="cmd-slash">/effect</span> <span class="cmd-keyword">@a</span> <span class="cmd-value">slowness 60 255 true</span>
+
+<span class="cmd-comment"># Einfrieren aufheben</span>
+<span class="cmd-slash">/effect</span> <span class="cmd-keyword">@a</span> <span class="cmd-value">clear</span>
+
+<span class="cmd-comment"># Alle Scoreboards zurücksetzen</span>
+<span class="cmd-slash">/scoreboard players set</span> <span class="cmd-keyword">@a</span> <span class="cmd-value">Fortschritt 0</span>
+<span class="cmd-slash">/scoreboard players set</span> <span class="cmd-keyword">@a</span> <span class="cmd-value">Aufgaben 0</span>
+
+<span class="cmd-comment"># Spawnpunkt aller auf Startpunkt</span>
+<span class="cmd-slash">/spawnpoint</span> <span class="cmd-keyword">@a</span> <span class="cmd-value">0 65 0</span>
+
+<span class="cmd-comment"># Alle zu Spawnpunkt</span>
+<span class="cmd-slash">/tp</span> <span class="cmd-keyword">@a</span> <span class="cmd-value">0 65 0</span></code>
+    </div>
+
+    <h3>🔐 Datenschutz & Sicherheit</h3>
+    <div class="callout warn">
+      <span class="callout-icon">⚠️</span>
+      <div>
+        <strong>Wichtige Hinweise:</strong>
+        <ul style="margin-top:8px;padding-left:16px;font-size:.85rem">
+          <li>Keine echten Namen der SuS als Scoreboard-Anzeigenamen verwenden</li>
+          <li>Kein Chat-Logging ohne Einwilligung der Eltern</li>
+          <li>Welten mit SuS-Daten nicht öffentlich teilen</li>
+          <li>Passwortschutz für Lehrkraft-Serverwelten aktivieren</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>♿ Barrierefreiheit</h3>
+    <div class="card">
+      <h4>🌈 Inklusionshinweise</h4>
+      <ul style="font-size:.85rem;padding-left:18px">
+        <li>Immer Schrift-Schilder UND NPC-Dialoge kombinieren (Leseschwäche)</li>
+        <li>Farbcodes NICHT als einziges Unterscheidungsmerkmal nutzen (Farbenblindheit)</li>
+        <li>Klare, kurze Anweisungen — kein langer Fließtext in der Welt</li>
+        <li>Tastaturzugängliche Wege (keine Parkour-Pflicht-Passagen)</li>
+        <li>Zeitlimits bei Quizzen großzügig setzen oder deaktivieren</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- SECTION 10 -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <span class="section-icon">📦</span>
+      <h2>Export der Welt als .mcworld-Datei</h2>
+    </div>
+
+    <p>Der Export als <code>.mcworld</code> erlaubt die Weitergabe und Nutzung auf anderen Geräten — ideal für Klassen, die mit eigenen Tablets oder PCs arbeiten.</p>
+
+    <h3>📤 Export-Schritte (iOS/Android/Windows)</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>Welt verlassen</h4>
+          <p>Verlasse die Welt und gehe zum Hauptmenü. Wähle „Spielen" → Welt-Liste.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>Bearbeiten-Menü öffnen</h4>
+          <p>Klicke auf den Stift (✏️) neben deiner Welt → „Welt exportieren".</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>Datei speichern</h4>
+          <p>Wähle Speicherort. Die Datei erhält die Endung <code>.mcworld</code> (ca. 1–50 MB je nach Weltgröße).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>Verteilen</h4>
+          <p>Teile die Datei per Teams, Moodle, Google Classroom, USB oder QR-Code. SuS öffnen die Datei → automatischer Import in Minecraft Education.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>🖥️ Export unter Windows (Dateipfad)</h3>
+    <div class="code-block">
+      <div class="cb-label">📁 Weltdateien finden (Windows)</div>
+      <code><span class="cmd-comment"># Minecraft Education Weltordner:</span>
+<span class="cmd-value">%LOCALAPPDATA%\Packages\Microsoft.MinecraftEducationEdition_8wekyb3d8bbwe\</span>
+<span class="cmd-value">LocalState\games\com.mojang\minecraftWorlds\</span>
+
+<span class="cmd-comment"># Ordner-Inhalt der Welt kopieren und umbenennen:</span>
+<span class="cmd-value">MeineWelt\</span>
+<span class="cmd-value">  ├── level.dat        ← Welteinstellungen</span>
+<span class="cmd-value">  ├── level.dat_old</span>
+<span class="cmd-value">  ├── db\              ← Chunk-Daten</span>
+<span class="cmd-value">  └── world_icon.jpeg  ← Vorschaubild</span>
+
+<span class="cmd-comment"># Ordner zippen und in .mcworld umbenennen!</span></code>
+    </div>
+
+    <h3>✅ Checkliste vor dem Export</h3>
+    <div class="card green">
+      <h4>📋 Export-Checkliste</h4>
+      <ul style="font-size:.85rem;padding-left:18px;line-height:1.9">
+        <li>☐ Alle Scoreboards auf 0 zurückgesetzt</li>
+        <li>☐ Alle SuS aus der Welt entfernt</li>
+        <li>☐ Testdurchlauf als neuer Spieler gemacht</li>
+        <li>☐ Alle Türen sind geschlossen (Ausgangszustand)</li>
+        <li>☐ Spawnpunkt korrekt gesetzt (0, 65, 0)</li>
+        <li>☐ Weltname sprechend (z.B. <code>Klasse5_Aggregatzustaende_v2</code>)</li>
+        <li>☐ Backup der originalen Welt vorhanden</li>
+        <li>☐ .mcworld-Datei auf einem Test-Gerät importiert</li>
+      </ul>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-icon">💡</span>
+      <div><strong>Versionierung:</strong> Bennene Exporte mit Datum: <code>Lernwelt_Physik_2024-03-15_v1.mcworld</code>. So kannst du immer auf eine funktionierende Version zurückgreifen.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- BEFEHLS-ÜBERSICHT -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="section" id="commands">
+    <div class="section-header">
+      <span class="section-num">📋</span>
+      <span class="section-icon">💻</span>
+      <h2>Schnellreferenz: Wichtigste Befehle</h2>
+    </div>
+
+    <table>
+      <thead><tr><th>Kategorie</th><th>Befehl</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td>🎮 Spielmodus</td><td><code>/gamemode adventure @a</code></td><td>SuS in Abenteuermodus</td></tr>
+        <tr><td>🎮 Spielmodus</td><td><code>/gamemode creative @s</code></td><td>Lehrkraft in Kreativmodus</td></tr>
+        <tr><td>📊 Scoreboard</td><td><code>/scoreboard objectives add X dummy "Label"</code></td><td>Neues Scoreboard</td></tr>
+        <tr><td>📊 Scoreboard</td><td><code>/scoreboard players add @a X 1</code></td><td>+1 Punkt für alle</td></tr>
+        <tr><td>📊 Scoreboard</td><td><code>/scoreboard players set @a X 0</code></td><td>Alle auf 0 setzen</td></tr>
+        <tr><td>🚀 Teleport</td><td><code>/tp @a 0 65 0</code></td><td>Alle zu Koordinate</td></tr>
+        <tr><td>🚀 Teleport</td><td><code>/tp @a @s</code></td><td>Alle zu Lehrkraft</td></tr>
+        <tr><td>🧱 Blöcke</td><td><code>/fill X1 Y1 Z1 X2 Y2 Z2 barrier</code></td><td>Barriere-Box</td></tr>
+        <tr><td>🧱 Blöcke</td><td><code>/setblock ~ ~ ~ air</code></td><td>Block entfernen</td></tr>
+        <tr><td>👤 NPC</td><td><code>/summon npc ~ ~ ~ "Name"</code></td><td>NPC spawnen</td></tr>
+        <tr><td>💬 Nachrichten</td><td><code>/title @a title {"text":"X"}</code></td><td>Titel einblenden</td></tr>
+        <tr><td>💬 Nachrichten</td><td><code>/tellraw @a {"text":"X","color":"green"}</code></td><td>Chat-Nachricht</td></tr>
+        <tr><td>⏸️ Pause</td><td><code>/effect @a slowness 60 255 true</code></td><td>SuS einfrieren</td></tr>
+        <tr><td>⏸️ Pause</td><td><code>/effect @a clear</code></td><td>Effekte entfernen</td></tr>
+        <tr><td>🏠 Spawn</td><td><code>/spawnpoint @a 0 65 0</code></td><td>Spawn setzen</td></tr>
+        <tr><td>📦 Struktur</td><td><code>/structure load Name X Y Z</code></td><td>Struktur laden</td></tr>
+        <tr><td>🌍 Welt</td><td><code>/worldborder set 200</code></td><td>Weltgrenze</td></tr>
+        <tr><td>⚡ Fähigkeiten</td><td><code>/ability @a mayfly false</code></td><td>Fliegen sperren</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+</div>
+
+<footer>
+  <strong>Minecraft Education – Professionelle Lernwelten</strong> · Lehrkräfte-Handbuch v1.0<br>
+  Erstellt mit ❤️ für den Unterricht · Kein offizielles Microsoft/Mojang-Dokument · Minecraft ist eine Marke von Microsoft
+</footer>
+
+<script>
+  // Highlight active nav item on scroll
+  const sections = document.querySelectorAll('.section, #intro');
+  const navLinks = document.querySelectorAll('nav.sidebar a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const id = entry.target.id;
+        const link = document.querySelector(`nav.sidebar a[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-60px 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
