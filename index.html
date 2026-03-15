@@ -1,508 +1,810 @@
 <!DOCTYPE html>
+
 <html lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Minecraft Education – Lernwelt Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --green: #4CAF50;
-    --green-dark: #2e7d32;
-    --green-light: #e8f5e9;
-    --dirt: #795548;
-    --stone: #546e7a;
-    --sky: #0d47a1;
-    --sky-light: #e3f2fd;
-    --gold: #f9a825;
-    --red: #c62828;
-    --text: #1a1a2e;
-    --muted: #546e7a;
-    --bg: #f5f7fa;
-    --white: #ffffff;
-    --border: #cfd8dc;
-    --code-bg: #1e2a38;
-    --code-text: #a8ff78;
-    --sidebar-w: 280px;
-    --radius: 10px;
-  }
+/* ─── RESET & VARIABLES ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+–grass: #5dbb34;
+–grass-dark: #3d8c1e;
+–grass-light: rgba(93,187,52,0.08);
+–sky: #5bc8f5;
+–sky-dark: #1a6b9e;
+–gold: #ffd700;
+–gold-dark: #cc9900;
+–diamond: #4ef0e8;
+–redstone: #e01010;
+–bg: #0f1923;
+–bg2: #0d1b2e;
+–bg3: #0a1220;
+–card: #111e30;
+–border: #1e3050;
+–text: #d8e8f0;
+–muted: #5a7a9a;
+–header-h: 60px;
+–sidebar-w: 260px;
+–radius: 4px;
+}
 
-  body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.7;
-  }
+body {
+font-family: ‘Nunito’, sans-serif;
+background: var(–bg);
+color: var(–text);
+line-height: 1.7;
+overflow-x: hidden;
+}
 
-  /* ── HEADER ── */
-  header {
-    background: linear-gradient(135deg, #1b5e20 0%, #0d47a1 100%);
-    color: white;
-    padding: 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 12px rgba(0,0,0,.3);
-  }
-  .header-inner {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 14px 32px;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-  }
-  .header-logo {
-    font-size: 2rem;
-  }
-  .header-title h1 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    letter-spacing: .3px;
-  }
-  .header-title p {
-    font-size: .8rem;
-    opacity: .75;
-    margin-top: 1px;
-  }
-  .header-badge {
-    margin-left: auto;
-    background: rgba(255,255,255,.15);
-    border: 1px solid rgba(255,255,255,.3);
-    border-radius: 20px;
-    padding: 4px 14px;
-    font-size: .75rem;
-    font-weight: 600;
-    letter-spacing: .5px;
-    text-transform: uppercase;
-  }
+body::before {
+content: ‘’;
+position: fixed; inset: 0;
+background-image:
+repeating-linear-gradient(0deg, transparent, transparent 31px, rgba(255,255,255,0.012) 32px),
+repeating-linear-gradient(90deg, transparent, transparent 31px, rgba(255,255,255,0.012) 32px);
+pointer-events: none; z-index: 0;
+}
 
-  /* ── LAYOUT ── */
-  .layout {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: var(--sidebar-w) 1fr;
-    gap: 0;
-    min-height: calc(100vh - 60px);
-  }
+/* ─── LANGUAGE SWITCHER ─── */
+.lang-bar {
+background: var(–bg3);
+border-bottom: 1px solid var(–border);
+display: flex;
+justify-content: flex-end;
+align-items: center;
+padding: 6px 20px;
+gap: 6px;
+position: sticky;
+top: 0;
+z-index: 200;
+}
 
-  /* ── SIDEBAR ── */
-  nav.sidebar {
-    background: var(--white);
-    border-right: 1px solid var(--border);
-    padding: 28px 0;
-    position: sticky;
-    top: 60px;
-    height: calc(100vh - 60px);
-    overflow-y: auto;
-  }
-  .sidebar-label {
-    font-size: .68rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    color: var(--muted);
-    padding: 0 20px 8px;
-    margin-top: 12px;
-  }
-  nav.sidebar a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 9px 20px;
-    color: var(--text);
-    text-decoration: none;
-    font-size: .85rem;
-    border-left: 3px solid transparent;
-    transition: all .18s;
-  }
-  nav.sidebar a:hover,
-  nav.sidebar a.active {
-    background: var(--green-light);
-    border-left-color: var(--green);
-    color: var(--green-dark);
-    font-weight: 600;
-  }
-  nav.sidebar a .nav-icon { font-size: 1rem; min-width: 20px; text-align: center; }
-  nav.sidebar a .nav-num {
-    font-size: .7rem;
-    font-weight: 700;
-    background: var(--green);
-    color: white;
-    border-radius: 50%;
-    width: 18px; height: 18px;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
+.lang-btn {
+font-family: ‘VT323’, monospace;
+font-size: 1rem;
+letter-spacing: 1px;
+padding: 4px 14px;
+border-radius: var(–radius);
+border: 2px solid var(–border);
+background: transparent;
+color: var(–muted);
+cursor: pointer;
+transition: all 0.15s;
+}
 
-  /* ── MAIN ── */
-  main {
-    padding: 40px 48px;
-    max-width: 900px;
-  }
+.lang-btn:hover { border-color: var(–grass); color: var(–grass); }
+.lang-btn.active {
+background: var(–grass);
+border-color: var(–grass);
+color: #0d1a08;
+box-shadow: 2px 2px 0 var(–grass-dark);
+}
 
-  /* Hero */
-  .hero {
-    background: linear-gradient(135deg, #1b5e20, #0d47a1);
-    color: white;
-    border-radius: var(--radius);
-    padding: 40px;
-    margin-bottom: 40px;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '⛏️🧱🌍';
-    position: absolute;
-    right: 30px; top: 20px;
-    font-size: 3.5rem;
-    opacity: .2;
-    letter-spacing: 8px;
-  }
-  .hero h2 { font-size: 1.75rem; margin-bottom: 10px; }
-  .hero p { opacity: .85; max-width: 600px; font-size: .95rem; }
-  .hero-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
-  .tag {
-    background: rgba(255,255,255,.18);
-    border: 1px solid rgba(255,255,255,.3);
-    border-radius: 20px;
-    padding: 3px 12px;
-    font-size: .75rem;
-    font-weight: 600;
-  }
+/* ─── HEADER ─── */
+header {
+background: linear-gradient(180deg, #071020 0%, #0d1e34 100%);
+border-bottom: 4px solid var(–grass);
+position: sticky;
+top: 37px;
+z-index: 150;
+box-shadow: 0 4px 0 var(–grass-dark), 0 8px 32px rgba(0,0,0,.5);
+}
 
-  /* Sections */
-  .section {
-    margin-bottom: 52px;
-    scroll-margin-top: 80px;
-  }
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 22px;
-    padding-bottom: 12px;
-    border-bottom: 2px solid var(--green);
-  }
-  .section-num {
-    background: var(--green);
-    color: white;
-    font-size: .85rem;
-    font-weight: 800;
-    width: 36px; height: 36px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .section-header h2 {
-    font-size: 1.35rem;
-    font-weight: 700;
-    color: var(--green-dark);
-  }
-  .section-header .section-icon { font-size: 1.5rem; }
+.header-inner {
+max-width: 1400px; margin: 0 auto;
+padding: 0 20px;
+display: flex; align-items: center; gap: 12px;
+height: var(–header-h);
+}
 
-  h3 {
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--stone);
-    margin: 22px 0 8px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
+.header-logo {
+width: 44px; height: 44px; flex-shrink: 0;
+background: var(–grass);
+border: 3px solid var(–grass-dark);
+border-radius: var(–radius);
+display: flex; align-items: center; justify-content: center;
+font-size: 1.5rem;
+box-shadow: inset -3px -3px 0 rgba(0,0,0,.3), inset 3px 3px 0 rgba(255,255,255,.15);
+animation: bob 2.4s ease-in-out infinite;
+}
 
-  p { margin-bottom: 12px; font-size: .92rem; }
+@keyframes bob {
+0%,100% { transform: translateY(0); }
+50%      { transform: translateY(-3px); }
+}
 
-  /* Cards */
-  .card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px 24px;
-    margin: 14px 0;
-    box-shadow: 0 1px 4px rgba(0,0,0,.06);
-  }
-  .card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 14px;
-    margin: 14px 0;
-  }
-  .card.green { border-left: 4px solid var(--green); background: var(--green-light); }
-  .card.blue  { border-left: 4px solid var(--sky); background: var(--sky-light); }
-  .card.gold  { border-left: 4px solid var(--gold); background: #fffde7; }
-  .card.red   { border-left: 4px solid var(--red); background: #ffebee; }
-  .card.dark  { background: #263238; color: #eceff1; border: none; }
+.header-title h1 {
+font-family: ‘Press Start 2P’, monospace;
+font-size: clamp(0.5rem, 1.5vw, 0.72rem);
+color: var(–grass);
+line-height: 1.5;
+text-shadow: 2px 2px 0 var(–grass-dark);
+}
 
-  .card h4 {
-    font-size: .88rem;
-    font-weight: 700;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .card ul { padding-left: 18px; font-size: .85rem; }
-  .card ul li { margin-bottom: 4px; }
+.header-title p {
+font-family: ‘VT323’, monospace;
+font-size: clamp(0.75rem, 2vw, 1rem);
+color: var(–muted);
+letter-spacing: 1px;
+margin-top: 2px;
+}
 
-  /* Code blocks */
-  .code-block {
-    background: var(--code-bg);
-    border-radius: 8px;
-    padding: 16px 20px;
-    margin: 12px 0;
-    overflow-x: auto;
-    position: relative;
-  }
-  .code-block .cb-label {
-    font-size: .68rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #78909c;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .code-block code {
-    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
-    font-size: .82rem;
-    color: var(--code-text);
-    display: block;
-    line-height: 1.8;
-    white-space: pre;
-  }
-  .code-block code .cmd-comment { color: #546e7a; }
-  .code-block code .cmd-slash { color: #80cbc4; }
-  .code-block code .cmd-keyword { color: #ffcc02; }
-  .code-block code .cmd-value { color: #f48fb1; }
+.header-badge {
+margin-left: auto; flex-shrink: 0;
+background: var(–gold); color: #111;
+border-radius: var(–radius);
+padding: 5px 12px;
+font-family: ‘Press Start 2P’, monospace;
+font-size: 0.45rem;
+box-shadow: 3px 3px 0 var(–gold-dark);
+animation: pulse-g 3s ease-in-out infinite;
+white-space: nowrap;
+}
 
-  /* Steps */
-  .steps { counter-reset: step; margin: 14px 0; }
-  .step {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 16px;
-    padding: 16px;
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: 0 1px 3px rgba(0,0,0,.05);
-  }
-  .step-num {
-    counter-increment: step;
-    background: var(--green);
-    color: white;
-    font-weight: 800;
-    font-size: .85rem;
-    width: 30px; height: 30px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-  .step-content h4 {
-    font-size: .9rem;
-    font-weight: 700;
-    margin-bottom: 4px;
-  }
-  .step-content p { font-size: .85rem; margin: 0; }
+@keyframes pulse-g {
+0%,100% { box-shadow: 3px 3px 0 var(–gold-dark); }
+50%      { box-shadow: 3px 3px 0 var(–gold-dark), 0 0 18px rgba(255,215,0,.3); }
+}
 
-  /* Architecture diagram */
-  .arch {
-    background: var(--code-bg);
-    border-radius: var(--radius);
-    padding: 24px;
-    margin: 16px 0;
-    font-family: 'Cascadia Code', 'Consolas', monospace;
-    font-size: .78rem;
-    color: #b0bec5;
-    line-height: 1.9;
-    overflow-x: auto;
-  }
-  .arch .arch-title { color: #ffcc02; font-weight: 700; font-size: .85rem; }
-  .arch .arch-zone { color: #80cbc4; }
-  .arch .arch-block { color: #a8ff78; }
-  .arch .arch-note { color: #78909c; }
+/* ─── HAMBURGER (mobile only) ─── */
+.hamburger {
+display: none;
+flex-direction: column; justify-content: center; align-items: center;
+gap: 5px;
+width: 40px; height: 40px;
+background: var(–card); border: 2px solid var(–border);
+border-radius: var(–radius); cursor: pointer;
+flex-shrink: 0;
+transition: border-color .15s;
+}
 
-  /* Table */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: .85rem;
-    margin: 14px 0;
-    background: var(--white);
-    border-radius: var(--radius);
-    overflow: hidden;
-    box-shadow: 0 1px 4px rgba(0,0,0,.06);
-  }
-  th {
-    background: var(--green-dark);
-    color: white;
-    padding: 10px 14px;
-    text-align: left;
-    font-size: .8rem;
-    text-transform: uppercase;
-    letter-spacing: .5px;
-  }
-  td { padding: 9px 14px; border-bottom: 1px solid var(--border); }
-  tr:last-child td { border: none; }
-  tr:nth-child(even) td { background: #f9fafb; }
+.hamburger:hover { border-color: var(–grass); }
+.hamburger span {
+display: block; width: 20px; height: 2px;
+background: var(–text);
+border-radius: 2px;
+transition: all .25s;
+}
 
-  /* Callout */
-  .callout {
-    border-radius: var(--radius);
-    padding: 14px 18px;
-    margin: 14px 0;
-    display: flex;
-    gap: 12px;
-    font-size: .88rem;
-  }
-  .callout.tip  { background: #e8f5e9; border-left: 4px solid var(--green); }
-  .callout.warn { background: #fff8e1; border-left: 4px solid var(--gold); }
-  .callout.info { background: var(--sky-light); border-left: 4px solid var(--sky); }
-  .callout.danger { background: #ffebee; border-left: 4px solid var(--red); }
-  .callout-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-  /* Progress bar visual */
-  .progress-visual {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-    margin: 10px 0;
-    flex-wrap: wrap;
-  }
-  .pv-block {
-    width: 28px; height: 28px;
-    border-radius: 4px;
-    border: 1px solid rgba(0,0,0,.12);
-    font-size: .65rem;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 700;
-  }
-  .pv-block.done { background: var(--green); color: white; }
-  .pv-block.partial { background: var(--gold); color: white; }
-  .pv-block.empty { background: var(--border); color: var(--muted); }
-  .pv-arrow { color: var(--muted); font-size: .9rem; }
+/* ─── LAYOUT ─── */
+.layout {
+max-width: 1400px; margin: 0 auto;
+display: grid;
+grid-template-columns: var(–sidebar-w) 1fr;
+min-height: calc(100vh - var(–header-h) - 37px);
+position: relative; z-index: 1;
+}
 
-  /* TOC */
-  .toc-overview {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 10px;
-    margin: 16px 0;
-  }
-  .toc-item {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 12px 16px;
-    font-size: .82rem;
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-    cursor: pointer;
-    transition: all .18s;
-    text-decoration: none;
-    color: var(--text);
-  }
-  .toc-item:hover {
-    border-color: var(--green);
-    background: var(--green-light);
-    transform: translateY(-1px);
-    box-shadow: 0 3px 8px rgba(0,0,0,.08);
-  }
-  .toc-item .ti-num {
-    font-weight: 800;
-    color: var(--green);
-    font-size: .9rem;
-    flex-shrink: 0;
-  }
+/* ─── SIDEBAR ─── */
+nav.sidebar {
+background: var(–bg3);
+border-right: 2px solid var(–border);
+padding: 20px 0 40px;
+position: sticky;
+top: calc(var(–header-h) + 37px);
+height: calc(100vh - var(–header-h) - 37px);
+overflow-y: auto;
+transition: transform .3s ease, opacity .3s ease;
+}
 
-  /* Footer */
-  footer {
-    grid-column: 1 / -1;
-    background: var(--code-bg);
-    color: #78909c;
-    text-align: center;
-    padding: 24px;
-    font-size: .8rem;
-    margin-top: 40px;
-  }
-  footer strong { color: #b0bec5; }
+.sidebar-label {
+font-family: ‘Press Start 2P’, monospace;
+font-size: 0.42rem;
+color: var(–muted);
+padding: 0 14px 8px;
+margin-top: 16px;
+letter-spacing: 1px;
+text-transform: uppercase;
+}
 
-  /* Scrollbar */
-  nav.sidebar::-webkit-scrollbar { width: 4px; }
-  nav.sidebar::-webkit-scrollbar-track { background: transparent; }
-  nav.sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+nav.sidebar a {
+display: flex; align-items: center; gap: 10px;
+padding: 9px 14px;
+color: #8aaccb;
+text-decoration: none;
+font-size: 0.78rem; font-weight: 600;
+border-left: 3px solid transparent;
+transition: all .13s;
+position: relative;
+}
 
-  /* Responsive */
-  @media (max-width: 900px) {
-    .layout { grid-template-columns: 1fr; }
-    nav.sidebar { display: none; }
-    main { padding: 24px 20px; }
-  }
+nav.sidebar a:hover, nav.sidebar a.active {
+background: var(–grass-light);
+border-left-color: var(–grass);
+color: var(–grass);
+}
 
-  @media print {
-    nav.sidebar, header .header-badge { display: none; }
-    main { max-width: 100%; padding: 0; }
-  }
+nav.sidebar a.active::after {
+content: ‘◄’;
+position: absolute; right: 10px;
+font-size: 0.6rem; color: var(–grass);
+}
+
+.nav-num {
+font-family: ‘Press Start 2P’, monospace;
+font-size: 0.42rem;
+background: var(–grass-dark); color: white;
+border-radius: 2px;
+width: 20px; height: 20px;
+display: flex; align-items: center; justify-content: center;
+flex-shrink: 0;
+box-shadow: 2px 2px 0 rgba(0,0,0,.4);
+}
+
+nav.sidebar::-webkit-scrollbar { width: 3px; }
+nav.sidebar::-webkit-scrollbar-track { background: transparent; }
+nav.sidebar::-webkit-scrollbar-thumb { background: var(–border); border-radius: 2px; }
+
+/* ─── MAIN CONTENT ─── */
+main {
+padding: clamp(20px, 4vw, 48px);
+max-width: 900px;
+width: 100%;
+}
+
+/* ─── HERO ─── */
+.hero {
+background: linear-gradient(135deg, #0a2a14 0%, #08203a 55%, #160a28 100%);
+border: 3px solid var(–grass);
+border-radius: 6px;
+padding: clamp(24px, 5vw, 44px);
+margin-bottom: 32px;
+position: relative; overflow: hidden;
+box-shadow: 6px 6px 0 var(–grass-dark), 0 20px 60px rgba(0,0,0,.5);
+}
+
+.hero::before {
+content: ‘🧱’;
+position: absolute; right: -10px; top: -10px;
+font-size: 8rem; opacity: .06;
+transform: rotate(12deg);
+pointer-events: none;
+}
+
+.hero-label {
+font-family: ‘VT323’, monospace;
+font-size: 1rem; color: var(–grass);
+letter-spacing: 3px; text-transform: uppercase;
+margin-bottom: 12px;
+display: flex; align-items: center; gap: 10px;
+}
+
+.hero-label::before { content: ‘’; width: 30px; height: 2px; background: var(–grass); opacity: .5; }
+
+.hero h2 {
+font-family: ‘Press Start 2P’, monospace;
+font-size: clamp(0.65rem, 2vw, 1rem);
+color: #fff; line-height: 1.7;
+text-shadow: 2px 2px 0 rgba(0,0,0,.5);
+margin-bottom: 14px;
+}
+
+.hero p { font-size: 0.9rem; color: #b0cce0; max-width: 560px; line-height: 1.8; }
+
+.hero-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
+
+.tag {
+background: rgba(93,187,52,.13);
+border: 2px solid rgba(93,187,52,.35);
+color: var(–grass);
+border-radius: var(–radius);
+padding: 3px 10px;
+font-family: ‘VT323’, monospace;
+font-size: 0.95rem; letter-spacing: 1px;
+}
+
+/* ─── TOC ─── */
+.toc-overview {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+gap: 8px; margin-bottom: 40px;
+}
+
+.toc-item {
+background: var(–card);
+border: 2px solid var(–border);
+border-radius: var(–radius);
+padding: 11px 13px;
+font-size: 0.76rem; font-weight: 700;
+display: flex; gap: 8px; align-items: flex-start;
+text-decoration: none; color: #8aaccb;
+transition: all .15s;
+}
+
+.toc-item:hover {
+border-color: var(–grass); color: var(–grass);
+transform: translateY(-2px) translateX(2px);
+box-shadow: -2px 2px 0 var(–grass-dark);
+background: var(–grass-light);
+}
+
+.ti-num {
+font-family: ‘Press Start 2P’, monospace;
+font-size: 0.5rem; color: var(–gold); flex-shrink: 0; padding-top: 2px;
+}
+
+/* ─── SECTIONS ─── */
+.section { margin-bottom: 52px; scroll-margin-top: 110px; }
+
+.section-header {
+display: flex; align-items: center; gap: 12px;
+margin-bottom: 22px; padding-bottom: 14px;
+border-bottom: 2px solid transparent;
+border-image: linear-gradient(90deg, var(–grass), var(–sky-dark), transparent) 1;
+}
+
+.section-num {
+background: var(–grass); color: #0d1a08;
+font-family: ‘Press Start 2P’, monospace; font-size: 0.6rem;
+width: 38px; height: 38px; flex-shrink: 0;
+border-radius: var(–radius);
+display: flex; align-items: center; justify-content: center;
+box-shadow: 4px 4px 0 var(–grass-dark);
+}
+
+.section-header h2 {
+font-family: ‘Press Start 2P’, monospace;
+font-size: clamp(0.6rem, 1.8vw, 0.78rem);
+color: #e8f5d8; line-height: 1.6;
+text-shadow: 1px 1px 0 rgba(0,0,0,.5);
+}
+
+.section-icon { font-size: 1.3rem; }
+
+h3 {
+font-size: 0.82rem; font-weight: 800;
+color: var(–sky); margin: 26px 0 12px;
+text-transform: uppercase; letter-spacing: .5px;
+display: flex; align-items: center; gap: 8px;
+}
+
+h3::after { content: ‘’; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(91,200,245,.25), transparent); }
+
+p { margin-bottom: 12px; font-size: 0.9rem; color: #b8cfe0; line-height: 1.8; }
+
+code {
+font-family: ‘VT323’, monospace; font-size: 1.05rem;
+background: rgba(255,255,255,.07);
+padding: 1px 6px; border-radius: 2px;
+color: var(–diamond);
+border: 1px solid rgba(78,240,232,.2);
+}
+
+strong { color: #e8e0d0; }
+
+/* ─── CARDS ─── */
+.card {
+background: var(–card);
+border: 2px solid var(–border);
+border-radius: var(–radius);
+padding: 16px 20px; margin: 12px 0;
+position: relative; overflow: hidden;
+transition: transform .15s, box-shadow .15s;
+}
+
+.card:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,0,0,.3); }
+.card::before { content: ‘’; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+
+.card.green  { border-color: rgba(93,187,52,.3); }
+.card.green::before { background: var(–grass); }
+.card.blue   { border-color: rgba(91,200,245,.3); }
+.card.blue::before  { background: var(–sky); }
+.card.gold   { border-color: rgba(255,215,0,.3); }
+.card.gold::before  { background: var(–gold); }
+.card.red    { border-color: rgba(224,16,16,.3); }
+.card.red::before   { background: var(–redstone); }
+
+.card-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+gap: 10px; margin: 12px 0;
+}
+
+.card h4 {
+font-size: 0.78rem; font-weight: 800;
+margin-bottom: 8px; color: #e8e0d0;
+display: flex; align-items: center; gap: 6px;
+}
+
+.card ul { padding-left: 16px; font-size: 0.8rem; color: #7a9ab8; }
+.card ul li { margin-bottom: 4px; }
+
+/* ─── CODE BLOCKS ─── */
+.code-block {
+background: #050d18;
+border: 2px solid #1a2d4a;
+border-radius: var(–radius);
+padding: 16px 20px; margin: 12px 0;
+overflow-x: auto; position: relative;
+box-shadow: inset 0 2px 12px rgba(0,0,0,.4);
+}
+
+.code-block::before {
+content: ‘’;
+position: absolute; top: 0; left: 0; right: 0; height: 2px;
+background: linear-gradient(90deg, var(–diamond), var(–grass), transparent);
+opacity: .5;
+}
+
+.code-block .cb-label {
+font-family: ‘VT323’, monospace; font-size: 0.95rem;
+color: var(–muted); margin-bottom: 10px;
+text-transform: uppercase; letter-spacing: 1.5px;
+display: flex; align-items: center; gap: 8px;
+}
+
+.code-block .cb-label::after { content: ‘’; flex: 1; height: 1px; background: linear-gradient(90deg, #1a2d4a, transparent); }
+
+.code-block code {
+font-family: ‘VT323’, monospace; font-size: 1rem;
+color: #a8d880; display: block;
+line-height: 1.9; white-space: pre;
+background: none; padding: 0; border: none;
+}
+
+.cmd-comment { color: #2a4a6a; font-style: italic; }
+.cmd-slash   { color: var(–diamond); }
+.cmd-keyword { color: var(–gold); }
+.cmd-value   { color: #ff9bb0; }
+
+/* ─── STEPS ─── */
+.steps { margin: 14px 0; }
+
+.step {
+display: flex; gap: 14px;
+margin-bottom: 10px;
+padding: 14px 16px;
+background: var(–card); border: 2px solid var(–border);
+border-radius: var(–radius);
+transition: border-color .15s;
+}
+
+.step:hover { border-color: rgba(93,187,52,.35); }
+
+.step-num {
+background: var(–grass); color: #0d1a08;
+font-family: ‘Press Start 2P’, monospace; font-size: 0.55rem;
+width: 30px; height: 30px; flex-shrink: 0;
+border-radius: var(–radius);
+display: flex; align-items: center; justify-content: center;
+box-shadow: 3px 3px 0 var(–grass-dark); margin-top: 1px;
+}
+
+.step-content h4 { font-size: 0.86rem; font-weight: 800; margin-bottom: 4px; color: #e0dbd0; }
+.step-content p  { font-size: 0.82rem; margin: 0; color: #7a9ab8; }
+
+/* ─── ARCH DIAGRAM ─── */
+.arch {
+background: #050d18; border: 2px solid #1a2d4a;
+border-radius: var(–radius); padding: 20px 24px; margin: 14px 0;
+font-family: ‘VT323’, monospace; font-size: 0.88rem;
+color: #507090; line-height: 1.9; overflow-x: auto;
+}
+
+.arch-title { color: var(–gold); font-size: 0.95rem; letter-spacing: 2px; }
+.arch-zone  { color: var(–sky); }
+.arch-block { color: #a8d880; }
+.arch-note  { color: #2a4a6a; }
+
+/* ─── TABLE ─── */
+.table-wrap { overflow-x: auto; margin: 12px 0; border-radius: var(–radius); }
+
+table {
+width: 100%; min-width: 480px;
+border-collapse: collapse; font-size: 0.82rem;
+background: var(–card); border: 2px solid var(–border);
+}
+
+th {
+background: #0a1628; color: var(–grass);
+padding: 11px 14px; text-align: left;
+font-family: ‘Press Start 2P’, monospace; font-size: 0.45rem;
+letter-spacing: .5px; border-bottom: 2px solid var(–grass-dark);
+}
+
+td { padding: 9px 14px; border-bottom: 1px solid #152640; color: #9ab8d0; }
+tr:last-child td { border: none; }
+tr:hover td { background: rgba(93,187,52,.04); }
+
+/* ─── CALLOUT ─── */
+.callout {
+border-radius: var(–radius); padding: 13px 16px; margin: 12px 0;
+display: flex; gap: 10px; font-size: 0.86rem;
+border-left: 4px solid; background: var(–card); color: #a8c0d8;
+}
+
+.callout.tip    { border-color: var(–grass);    background: rgba(93,187,52,.06); }
+.callout.warn   { border-color: var(–gold);     background: rgba(255,215,0,.06); }
+.callout.info   { border-color: var(–sky);      background: rgba(91,200,245,.06); }
+.callout.danger { border-color: var(–redstone); background: rgba(224,16,16,.06); }
+.callout-icon   { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+
+/* ─── PROGRESS ─── */
+.xp-label {
+font-family: ‘VT323’, monospace; font-size: .88rem;
+color: var(–muted); letter-spacing: 2px;
+text-transform: uppercase; margin-bottom: 4px;
+}
+
+.xp-bar-wrap {
+background: #050d18; border: 2px solid var(–border);
+border-radius: 3px; height: 18px; overflow: hidden; margin-bottom: 12px;
+}
+
+.xp-bar {
+height: 100%; width: 0;
+background: linear-gradient(90deg, var(–grass), #8eff4a);
+border-radius: 2px; transition: width 1.2s ease;
+position: relative; overflow: hidden;
+}
+
+.xp-bar::after {
+content: ‘’;
+position: absolute; inset: 0;
+background: repeating-linear-gradient(90deg, transparent, transparent 18px, rgba(0,0,0,.2) 18px, rgba(0,0,0,.2) 20px);
+}
+
+.progress-visual {
+display: flex; gap: 6px; align-items: center; flex-wrap: wrap;
+margin: 8px 0 4px;
+}
+
+.pv-block {
+width: 34px; height: 34px; border-radius: 3px;
+font-family: ‘Press Start 2P’, monospace; font-size: 0.4rem;
+display: flex; align-items: center; justify-content: center;
+box-shadow: 3px 3px 0 rgba(0,0,0,.4); transition: transform .15s;
+cursor: default;
+}
+
+.pv-block:hover { transform: scale(1.15) translateY(-2px); }
+.pv-block.done    { background: var(–grass); color: #0d1a08; border: 2px solid var(–grass-dark); }
+.pv-block.partial { background: var(–gold);  color: #1a1000; border: 2px solid var(–gold-dark); }
+.pv-block.empty   { background: #1e3050; color: #3a5a7a; border: 2px solid #162640; }
+.pv-arrow { color: #3a5a7a; font-size: 1rem; }
+
+/* ─── FOOTER ─── */
+footer {
+grid-column: 1 / -1;
+background: #050d18;
+border-top: 3px solid var(–grass-dark);
+text-align: center; padding: 24px;
+font-family: ‘VT323’, monospace; font-size: 1rem;
+color: var(–muted); letter-spacing: 1px;
+}
+
+footer strong { color: #5a7a9a; }
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width: 7px; height: 7px; }
+::-webkit-scrollbar-track { background: var(–bg3); }
+::-webkit-scrollbar-thumb { background: var(–border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(–grass-dark); }
+
+/* ─── RESPONSIVE: TABLET ─── */
+@media (max-width: 1024px) {
+:root { –sidebar-w: 220px; }
+}
+
+/* ─── RESPONSIVE: MOBILE ─── */
+@media (max-width: 768px) {
+.hamburger { display: flex; }
+.header-badge { display: none; }
+.header-title p { display: none; }
+
+.layout { grid-template-columns: 1fr; }
+
+nav.sidebar {
+position: fixed;
+top: calc(var(–header-h) + 37px);
+left: 0; bottom: 0;
+width: min(300px, 85vw);
+z-index: 140;
+transform: translateX(-110%);
+opacity: 0;
+border-right: 3px solid var(–grass-dark);
+box-shadow: 6px 0 30px rgba(0,0,0,.6);
+}
+
+nav.sidebar.open {
+transform: translateX(0);
+opacity: 1;
+}
+
+.sidebar-overlay {
+display: none;
+position: fixed; inset: 0;
+background: rgba(0,0,0,.6);
+z-index: 130;
+backdrop-filter: blur(2px);
+}
+
+.sidebar-overlay.open { display: block; }
+
+main { padding: 20px 16px; }
+.hero { padding: 22px 18px; }
+
+.code-block { padding: 14px 14px; }
+.code-block code { font-size: 0.88rem; }
+
+.card-grid { grid-template-columns: 1fr; }
+.toc-overview { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+
+.section-header h2 { font-size: 0.6rem; }
+.arch { font-size: 0.72rem; padding: 14px 12px; }
+}
+
+@media (max-width: 420px) {
+.toc-overview { grid-template-columns: 1fr 1fr; }
+.hero h2 { font-size: 0.6rem; }
+.lang-bar { gap: 4px; padding: 5px 12px; }
+.lang-btn { padding: 3px 10px; font-size: 0.88rem; }
+}
+
+/* ─── I18N HIDDEN ─── */
+[data-lang] { display: none; }
+[data-lang].visible { display: inline; }
+.block-lang { display: none; }
+.block-lang.visible { display: block; }
+.flex-lang { display: none; }
+.flex-lang.visible { display: flex; }
+.grid-lang { display: none; }
+.grid-lang.visible { display: grid; }
 </style>
+
 </head>
 <body>
 
+<!-- LANG BAR -->
+
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('de')">🇩🇪 DE</button>
+  <button class="lang-btn" onclick="setLang('en')">🇬🇧 EN</button>
+  <button class="lang-btn" onclick="setLang('zh')">🇹🇼 中文</button>
+</div>
+
+<!-- HEADER -->
+
 <header>
   <div class="header-inner">
-    <div class="header-logo">🎮</div>
+    <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleSidebar()">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="header-logo">⛏️</div>
     <div class="header-title">
-      <h1>Minecraft Education – Professionelle Lernwelten</h1>
-      <p>Schritt-für-Schritt-Handbuch für Lehrkräfte · Version 1.0</p>
+      <h1>
+        <span data-lang="de" class="visible">Minecraft Education · Lernwelt Guide</span>
+        <span data-lang="en">Minecraft Education · Learning World Guide</span>
+        <span data-lang="zh">Minecraft Education · 學習世界指南</span>
+      </h1>
+      <p>
+        <span data-lang="de" class="visible">HANDBUCH FÜR LEHRKRÄFTE · v1.0</span>
+        <span data-lang="en">TEACHER HANDBOOK · v1.0</span>
+        <span data-lang="zh">教師手冊 · v1.0</span>
+      </p>
     </div>
-    <span class="header-badge">Lehrkräfte-Handbuch</span>
+    <span class="header-badge">
+      <span data-lang="de" class="visible">📋 HANDBUCH</span>
+      <span data-lang="en">📋 HANDBOOK</span>
+      <span data-lang="zh">📋 手冊</span>
+    </span>
   </div>
 </header>
+
+<div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
 
 <div class="layout">
 
 <!-- SIDEBAR -->
-<nav class="sidebar">
-  <div class="sidebar-label">Inhalt</div>
-  <a href="#intro" class="active"><span class="nav-icon">🏠</span> Einführung</a>
-  <a href="#s1"><span class="nav-num">1</span> Planung der Lektion</a>
-  <a href="#s2"><span class="nav-num">2</span> Technische Vorbereitung</a>
-  <a href="#s3"><span class="nav-num">3</span> Weltstruktur</a>
-  <a href="#s4"><span class="nav-num">4</span> Scoreboards</a>
-  <a href="#s5"><span class="nav-num">5</span> Command Blocks</a>
-  <a href="#s6"><span class="nav-num">6</span> NPCs</a>
-  <a href="#s7"><span class="nav-num">7</span> Absicherung</a>
-  <a href="#s8"><span class="nav-num">8</span> Strukturblöcke</a>
-  <a href="#s9"><span class="nav-num">9</span> Best Practices</a>
-  <a href="#s10"><span class="nav-num">10</span> Export</a>
-  <div class="sidebar-label" style="margin-top:16px">Referenz</div>
-  <a href="#arch"><span class="nav-icon">🗺️</span> Welt-Architektur</a>
-  <a href="#commands"><span class="nav-icon">💻</span> Befehls-Übersicht</a>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-label">
+    <span data-lang="de" class="visible">Navigation</span>
+    <span data-lang="en">Navigation</span>
+    <span data-lang="zh">導覽</span>
+  </div>
+  <a href="#intro" class="active" onclick="closeSidebar()">
+    <span style="font-size:1rem;min-width:20px;text-align:center">🏠</span>
+    <span data-lang="de" class="visible">Einführung</span>
+    <span data-lang="en">Introduction</span>
+    <span data-lang="zh">簡介</span>
+  </a>
+  <a href="#s1" onclick="closeSidebar()"><span class="nav-num">1</span>
+    <span data-lang="de" class="visible">Planung</span>
+    <span data-lang="en">Planning</span>
+    <span data-lang="zh">規劃</span>
+  </a>
+  <a href="#s2" onclick="closeSidebar()"><span class="nav-num">2</span>
+    <span data-lang="de" class="visible">Technische Vorbereitung</span>
+    <span data-lang="en">Technical Setup</span>
+    <span data-lang="zh">技術準備</span>
+  </a>
+  <a href="#s3" onclick="closeSidebar()"><span class="nav-num">3</span>
+    <span data-lang="de" class="visible">Weltstruktur</span>
+    <span data-lang="en">World Structure</span>
+    <span data-lang="zh">世界結構</span>
+  </a>
+  <a href="#s4" onclick="closeSidebar()"><span class="nav-num">4</span>Scoreboards</a>
+  <a href="#s5" onclick="closeSidebar()"><span class="nav-num">5</span>Command Blocks</a>
+  <a href="#s6" onclick="closeSidebar()"><span class="nav-num">6</span>NPCs</a>
+  <a href="#s7" onclick="closeSidebar()"><span class="nav-num">7</span>
+    <span data-lang="de" class="visible">Absicherung</span>
+    <span data-lang="en">Security</span>
+    <span data-lang="zh">安全防護</span>
+  </a>
+  <a href="#s8" onclick="closeSidebar()"><span class="nav-num">8</span>
+    <span data-lang="de" class="visible">Strukturblöcke</span>
+    <span data-lang="en">Structure Blocks</span>
+    <span data-lang="zh">結構方塊</span>
+  </a>
+  <a href="#s9" onclick="closeSidebar()"><span class="nav-num">9</span>
+    <span data-lang="de" class="visible">Best Practices</span>
+    <span data-lang="en">Best Practices</span>
+    <span data-lang="zh">最佳實踐</span>
+  </a>
+  <a href="#s10" onclick="closeSidebar()"><span class="nav-num">10</span>Export</a>
+
+  <div class="sidebar-label" style="margin-top:16px">
+    <span data-lang="de" class="visible">Referenz</span>
+    <span data-lang="en">Reference</span>
+    <span data-lang="zh">參考資料</span>
+  </div>
+  <a href="#arch" onclick="closeSidebar()">
+    <span style="font-size:1rem;min-width:20px;text-align:center">🗺️</span>
+    <span data-lang="de" class="visible">Architektur</span>
+    <span data-lang="en">Architecture</span>
+    <span data-lang="zh">架構</span>
+  </a>
+  <a href="#commands" onclick="closeSidebar()">
+    <span style="font-size:1rem;min-width:20px;text-align:center">💻</span>
+    <span data-lang="de" class="visible">Befehls-Übersicht</span>
+    <span data-lang="en">Command Reference</span>
+    <span data-lang="zh">指令總覽</span>
+  </a>
 </nav>
 
 <!-- MAIN -->
+
 <main>
 
   <!-- HERO -->
+
   <div class="hero" id="intro">
-    <h2>Professionelle Unterrichtswelten in Minecraft Education</h2>
-    <p>Dieses Handbuch führt Lehrkräfte Schritt für Schritt durch den gesamten Prozess — von der pädagogischen Planung bis zum exportierten <code>.mcworld</code>-File, das Schülerinnen und Schüler direkt starten können.</p>
+    <div class="hero-label">
+      <span data-lang="de" class="visible">Lehrkräfte-Handbuch</span>
+      <span data-lang="en">Teacher Handbook</span>
+      <span data-lang="zh">教師手冊</span>
+    </div>
+    <h2>
+      <span data-lang="de" class="visible">Professionelle Unterrichtswelten in Minecraft Education</span>
+      <span data-lang="en">Professional Learning Worlds in Minecraft Education</span>
+      <span data-lang="zh">在 Minecraft Education 中建立專業學習世界</span>
+    </h2>
+    <p>
+      <span data-lang="de" class="visible">Von der pädagogischen Planung bis zum fertigen <code>.mcworld</code>-File — Schritt für Schritt durch den gesamten Prozess.</span>
+      <span data-lang="en">From pedagogical planning to the finished <code>.mcworld</code> file — a step-by-step guide through the entire process.</span>
+      <span data-lang="zh">從教學規劃到完成的 <code>.mcworld</code> 檔案——逐步引導你完成整個流程。</span>
+    </p>
     <div class="hero-tags">
-      <span class="tag">📚 Alle Fächer</span>
-      <span class="tag">🏫 Klassen 4–12</span>
-      <span class="tag">⚙️ Minecraft Edu 1.20+</span>
-      <span class="tag">🎯 Projektorientiert</span>
+      <span class="tag">📚 <span data-lang="de" class="visible">Alle Fächer</span><span data-lang="en">All Subjects</span><span data-lang="zh">所有科目</span></span>
+      <span class="tag">🏫 <span data-lang="de" class="visible">Klassen 4–12</span><span data-lang="en">Grades 4–12</span><span data-lang="zh">4–12 年級</span></span>
+      <span class="tag">⚙️ MC Edu 1.20+</span>
+      <span class="tag">🎯 <span data-lang="de" class="visible">Projektorientiert</span><span data-lang="en">Project-based</span><span data-lang="zh">專案導向</span></span>
     </div>
   </div>
 
-  <!-- Übersicht -->
-  <div class="toc-overview">
+  <!-- TOC -->
+
+  <div class="toc-overview grid-lang de visible" id="toc-de">
     <a href="#s1" class="toc-item"><span class="ti-num">01</span>Planung & Lernziele</a>
     <a href="#s2" class="toc-item"><span class="ti-num">02</span>Technische Vorbereitung</a>
     <a href="#s3" class="toc-item"><span class="ti-num">03</span>Weltstruktur & Zonen</a>
@@ -514,862 +816,791 @@
     <a href="#s9" class="toc-item"><span class="ti-num">09</span>Best Practices</a>
     <a href="#s10" class="toc-item"><span class="ti-num">10</span>Export</a>
   </div>
+  <div class="toc-overview grid-lang en" id="toc-en">
+    <a href="#s1" class="toc-item"><span class="ti-num">01</span>Planning & Goals</a>
+    <a href="#s2" class="toc-item"><span class="ti-num">02</span>Technical Setup</a>
+    <a href="#s3" class="toc-item"><span class="ti-num">03</span>World Structure</a>
+    <a href="#s4" class="toc-item"><span class="ti-num">04</span>Scoreboards</a>
+    <a href="#s5" class="toc-item"><span class="ti-num">05</span>Command Blocks</a>
+    <a href="#s6" class="toc-item"><span class="ti-num">06</span>NPCs & Dialogue</a>
+    <a href="#s7" class="toc-item"><span class="ti-num">07</span>Security & Roles</a>
+    <a href="#s8" class="toc-item"><span class="ti-num">08</span>Structure Blocks</a>
+    <a href="#s9" class="toc-item"><span class="ti-num">09</span>Best Practices</a>
+    <a href="#s10" class="toc-item"><span class="ti-num">10</span>Export</a>
+  </div>
+  <div class="toc-overview grid-lang zh" id="toc-zh">
+    <a href="#s1" class="toc-item"><span class="ti-num">01</span>規劃與學習目標</a>
+    <a href="#s2" class="toc-item"><span class="ti-num">02</span>技術準備</a>
+    <a href="#s3" class="toc-item"><span class="ti-num">03</span>世界結構與區域</a>
+    <a href="#s4" class="toc-item"><span class="ti-num">04</span>計分板</a>
+    <a href="#s5" class="toc-item"><span class="ti-num">05</span>指令方塊</a>
+    <a href="#s6" class="toc-item"><span class="ti-num">06</span>NPC 與對話</a>
+    <a href="#s7" class="toc-item"><span class="ti-num">07</span>安全與角色</a>
+    <a href="#s8" class="toc-item"><span class="ti-num">08</span>結構方塊</a>
+    <a href="#s9" class="toc-item"><span class="ti-num">09</span>最佳實踐</a>
+    <a href="#s10" class="toc-item"><span class="ti-num">10</span>匯出</a>
+  </div>
 
-  <!-- ══════════════════════════════════════════════ -->
-  <!-- SECTION 1 -->
-  <!-- ══════════════════════════════════════════════ -->
+  <!-- ═══ SECTION 1 ═══ -->
+
   <div class="section" id="s1">
     <div class="section-header">
       <span class="section-num">1</span>
       <span class="section-icon">📋</span>
-      <h2>Planung der Lektion</h2>
+      <h2>
+        <span data-lang="de" class="visible">Planung der Lektion</span>
+        <span data-lang="en">Lesson Planning</span>
+        <span data-lang="zh">課程規劃</span>
+      </h2>
     </div>
 
-    <p>Bevor du auch nur einen Block in Minecraft setzt, muss die <strong>didaktische Grundstruktur</strong> stehen. Eine gut geplante Lernwelt reduziert Chaos im Unterricht drastisch und erlaubt dir, die Lernprozesse zu beobachten, statt ständig technische Feuer zu löschen.</p>
+```
+<p>
+  <span data-lang="de" class="visible">Bevor du auch nur einen Block in Minecraft setzt, muss die <strong>didaktische Grundstruktur</strong> stehen. Eine gut geplante Lernwelt reduziert Chaos im Unterricht drastisch.</span>
+  <span data-lang="en">Before placing a single block in Minecraft, the <strong>pedagogical structure</strong> must be in place. A well-planned learning world drastically reduces classroom chaos.</span>
+  <span data-lang="zh">在 Minecraft 中放置第一個方塊之前，<strong>教學基礎架構</strong>必須先確立。規劃完善的學習世界能大幅減少課堂混亂。</span>
+</p>
 
-    <h3>🎯 Lernziele definieren</h3>
-    <p>Formuliere 3–5 konkrete, messbare Lernziele im Stil von Lehrplänen:</p>
+<h3>🎯 <span data-lang="de" class="visible">Lernziele definieren</span><span data-lang="en">Defining Learning Goals</span><span data-lang="zh">定義學習目標</span></h3>
 
-    <div class="card-grid">
-      <div class="card green">
-        <h4>✅ Gutes Lernziel</h4>
-        <p style="font-size:.83rem">„SuS können die drei Aggregatzustände benennen und je ein Beispiel nennen."</p>
-        <p style="font-size:.78rem;color:var(--muted);margin:0">Messbar · Konkret · Überprüfbar</p>
-      </div>
-      <div class="card red">
-        <h4>❌ Schwaches Lernziel</h4>
-        <p style="font-size:.83rem">„SuS lernen etwas über Wasser und Physik."</p>
-        <p style="font-size:.78rem;color:var(--muted);margin:0">Zu vage · Nicht überprüfbar</p>
-      </div>
-    </div>
+<div class="card-grid">
+  <div class="card green">
+    <h4>✅ <span data-lang="de" class="visible">Gutes Lernziel</span><span data-lang="en">Good Goal</span><span data-lang="zh">好的學習目標</span></h4>
+    <p style="font-size:.82rem">
+      <span data-lang="de" class="visible">"SuS können die drei Aggregatzustände benennen und je ein Beispiel nennen."</span>
+      <span data-lang="en">"Students can name the three states of matter and give one example each."</span>
+      <span data-lang="zh">「學生能說出物質的三態並各舉一例。」</span>
+    </p>
+    <p style="font-size:.74rem;color:#5a8a40;margin:0">
+      <span data-lang="de" class="visible">Messbar · Konkret · Überprüfbar</span>
+      <span data-lang="en">Measurable · Concrete · Verifiable</span>
+      <span data-lang="zh">可測量 · 具體 · 可驗證</span>
+    </p>
+  </div>
+  <div class="card red">
+    <h4>❌ <span data-lang="de" class="visible">Schwaches Lernziel</span><span data-lang="en">Weak Goal</span><span data-lang="zh">模糊的學習目標</span></h4>
+    <p style="font-size:.82rem">
+      <span data-lang="de" class="visible">"SuS lernen etwas über Wasser und Physik."</span>
+      <span data-lang="en">"Students learn something about water and physics."</span>
+      <span data-lang="zh">「學生學習有關水和物理的知識。」</span>
+    </p>
+    <p style="font-size:.74rem;color:#8a3030;margin:0">
+      <span data-lang="de" class="visible">Zu vage · Nicht überprüfbar</span>
+      <span data-lang="en">Too vague · Not verifiable</span>
+      <span data-lang="zh">太模糊 · 無法驗證</span>
+    </p>
+  </div>
+</div>
 
-    <h3>📖 Kapitelstruktur planen</h3>
-    <p>Teile die Lernwelt in <strong>Module</strong> auf. Jedes Modul entspricht einer Zone in der Welt und einem Lernziel:</p>
+<h3>📖 <span data-lang="de" class="visible">Kapitelstruktur planen</span><span data-lang="en">Planning Chapter Structure</span><span data-lang="zh">規劃章節結構</span></h3>
 
-    <table>
-      <thead><tr><th>Modul</th><th>Zone in der Welt</th><th>Lernziel</th><th>Dauer</th></tr></thead>
-      <tbody>
-        <tr><td>M0 – Intro</td><td>Spawn-Bereich</td><td>Orientierung, Regeln</td><td>~5 min</td></tr>
-        <tr><td>M1 – Grundlagen</td><td>Zone Grün</td><td>Basiswissen erarbeiten</td><td>~15 min</td></tr>
-        <tr><td>M2 – Vertiefung</td><td>Zone Blau</td><td>Zusammenhänge verstehen</td><td>~15 min</td></tr>
-        <tr><td>M3 – Anwendung</td><td>Zone Rot</td><td>Transfer & Problemlösung</td><td>~20 min</td></tr>
-        <tr><td>M4 – Test</td><td>Testbereich</td><td>Kompetenzüberprüfung</td><td>~10 min</td></tr>
-      </tbody>
-    </table>
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th><span data-lang="de" class="visible">Modul</span><span data-lang="en">Module</span><span data-lang="zh">模組</span></th>
+        <th><span data-lang="de" class="visible">Zone in der Welt</span><span data-lang="en">World Zone</span><span data-lang="zh">世界區域</span></th>
+        <th><span data-lang="de" class="visible">Lernziel</span><span data-lang="en">Learning Goal</span><span data-lang="zh">學習目標</span></th>
+        <th><span data-lang="de" class="visible">Dauer</span><span data-lang="en">Duration</span><span data-lang="zh">時長</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>M0</td><td><span data-lang="de" class="visible">Spawn-Bereich</span><span data-lang="en">Spawn Area</span><span data-lang="zh">出生點區域</span></td><td><span data-lang="de" class="visible">Orientierung, Regeln</span><span data-lang="en">Orientation, Rules</span><span data-lang="zh">定向、規則</span></td><td>~5 min</td></tr>
+      <tr><td>M1</td><td><span data-lang="de" class="visible">Zone Grün</span><span data-lang="en">Green Zone</span><span data-lang="zh">綠色區域</span></td><td><span data-lang="de" class="visible">Basiswissen</span><span data-lang="en">Basic Knowledge</span><span data-lang="zh">基礎知識</span></td><td>~15 min</td></tr>
+      <tr><td>M2</td><td><span data-lang="de" class="visible">Zone Blau</span><span data-lang="en">Blue Zone</span><span data-lang="zh">藍色區域</span></td><td><span data-lang="de" class="visible">Vertiefung</span><span data-lang="en">Deepening</span><span data-lang="zh">深化理解</span></td><td>~15 min</td></tr>
+      <tr><td>M3</td><td><span data-lang="de" class="visible">Zone Rot</span><span data-lang="en">Red Zone</span><span data-lang="zh">紅色區域</span></td><td><span data-lang="de" class="visible">Anwendung</span><span data-lang="en">Application</span><span data-lang="zh">應用實踐</span></td><td>~20 min</td></tr>
+      <tr><td>M4</td><td><span data-lang="de" class="visible">Testbereich</span><span data-lang="en">Test Area</span><span data-lang="zh">測試區域</span></td><td><span data-lang="de" class="visible">Kompetenzcheck</span><span data-lang="en">Competency Check</span><span data-lang="zh">能力評估</span></td><td>~10 min</td></tr>
+    </tbody>
+  </table>
+</div>
 
-    <h3>🏆 Fortschrittssystem designen</h3>
-    <p>Minecraft Education bietet <strong>Scoreboards</strong> als Fortschrittsanzeige. Plane vorab, welche Aktionen Punkte geben:</p>
+<h3>🏆 <span data-lang="de" class="visible">Fortschrittssystem</span><span data-lang="en">Progress System</span><span data-lang="zh">進度系統</span></h3>
+<div class="xp-label"><span data-lang="de" class="visible">Fortschritt-Beispiel</span><span data-lang="en">Progress Example</span><span data-lang="zh">進度範例</span></div>
+<div class="xp-bar-wrap"><div class="xp-bar" id="xpbar"></div></div>
+<div class="progress-visual">
+  <div class="pv-block done">M0</div><div class="pv-arrow">→</div>
+  <div class="pv-block done">M1</div><div class="pv-arrow">→</div>
+  <div class="pv-block partial">M2</div><div class="pv-arrow">→</div>
+  <div class="pv-block empty">M3</div><div class="pv-arrow">→</div>
+  <div class="pv-block empty">M4</div>
+</div>
 
-    <div class="progress-visual">
-      <div class="pv-block done">M0</div>
-      <div class="pv-arrow">→</div>
-      <div class="pv-block done">M1</div>
-      <div class="pv-arrow">→</div>
-      <div class="pv-block partial">M2</div>
-      <div class="pv-arrow">→</div>
-      <div class="pv-block empty">M3</div>
-      <div class="pv-arrow">→</div>
-      <div class="pv-block empty">M4</div>
-    </div>
-    <p style="font-size:.78rem;color:var(--muted)">Beispiel: SuS hat Module 0+1 abgeschlossen, ist in Modul 2.</p>
+<div class="callout tip">
+  <span class="callout-icon">💡</span>
+  <div><strong><span data-lang="de" class="visible">Tipp:</span><span data-lang="en">Tip:</span><span data-lang="zh">提示：</span></strong>
+    <span data-lang="de" class="visible"> Plane das Fortschrittssystem auf Papier, bevor du anfängst zu bauen.</span>
+    <span data-lang="en"> Plan the progress system on paper before you start building.</span>
+    <span data-lang="zh"> 在開始建造之前，先在紙上規劃進度系統。</span>
+  </div>
+</div>
+```
 
-    <div class="callout tip">
-      <span class="callout-icon">💡</span>
-      <div><strong>Praxis-Tipp:</strong> Plane das Fortschrittssystem auf Papier, bevor du anfängst zu bauen. Ändere es später in Minecraft zu ändern kostet viel Zeit.</div>
-    </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════ -->
-  <!-- SECTION 2 -->
-  <!-- ══════════════════════════════════════════════ -->
+  <!-- ═══ SECTION 2 ═══ -->
+
   <div class="section" id="s2">
     <div class="section-header">
       <span class="section-num">2</span>
       <span class="section-icon">⚙️</span>
-      <h2>Technische Vorbereitung der Welt</h2>
+      <h2>
+        <span data-lang="de" class="visible">Technische Vorbereitung</span>
+        <span data-lang="en">Technical Setup</span>
+        <span data-lang="zh">技術準備</span>
+      </h2>
     </div>
 
-    <p>Eine korrekt konfigurierte Welt ist das Fundament. Fehleinstellungen führen zu unkontrollierbarem Verhalten der SuS oder kaputten Command-Block-Systemen.</p>
+```
+<p>
+  <span data-lang="de" class="visible">Eine korrekt konfigurierte Welt ist das Fundament. Fehleinstellungen führen zu unkontrollierbarem Verhalten der SuS oder kaputten Command-Block-Systemen.</span>
+  <span data-lang="en">A correctly configured world is the foundation. Incorrect settings lead to uncontrollable student behavior or broken command block systems.</span>
+  <span data-lang="zh">正確配置的世界是基礎。錯誤設定會導致學生行為不可控或指令方塊系統損壞。</span>
+</p>
 
-    <h3>🌍 Neue Welt anlegen</h3>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-content">
-          <h4>Spielmodus: Abenteuer oder Überleben?</h4>
-          <p>Für Lernwelten empfohlen: <strong>Abenteuer-Modus</strong>. SuS können Blöcke nur mit Werkzeug abbauen, das speziell erlaubt ist → kein ungewolltes Zerstören.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-content">
-          <h4>Cheats / Befehle aktivieren</h4>
-          <p>Für Command Blocks und NPC-Skripte <strong>müssen Cheats aktiviert sein</strong>. Gehe zu: Welt bearbeiten → Spieloptionen → Cheats: AN</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <h4>Welttyp: Superflach</h4>
-          <p>Wähle <strong>Superflache Welt</strong> als Typ. Das gibt dir eine saubere, leere Fläche ohne Berge, Höhlen oder zufällige Mobs — ideal zum Bauen.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <div class="step-content">
-          <h4>Schwierigkeit: Friedlich</h4>
-          <p>Stelle <strong>Friedlich</strong> ein, damit keine feindlichen Mobs spawnen und SuS sich auf die Lerninhalte konzentrieren können.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">5</div>
-        <div class="step-content">
-          <h4>Wetter & Tag/Nacht</h4>
-          <p>Deaktiviere Wetterwechsel und den Tages-/Nachtzyklus für konstante Sichtverhältnisse.</p>
-        </div>
-      </div>
-    </div>
-
-    <h3>👥 Rollen im Überblick</h3>
-    <table>
-      <thead><tr><th>Rolle</th><th>Berechtigungen</th><th>Wann vergeben?</th></tr></thead>
-      <tbody>
-        <tr><td>🔴 Operator</td><td>Alle Befehle, alle Blöcke, alle Rechte</td><td>Nur Lehrkraft</td></tr>
-        <tr><td>🟡 Worldbuilder</td><td>Kann Barriere-Blöcke platzieren/entfernen</td><td>Lehrkraft-Assistenz</td></tr>
-        <tr><td>🟢 Member</td><td>Standard-SuS: nur erlaubte Aktionen</td><td>Alle SuS</td></tr>
-        <tr><td>⚪ Visitor</td><td>Nur Beobachten, kein Bauen</td><td>Gäste / Demos</td></tr>
-      </tbody>
-    </table>
-
-    <div class="code-block">
-      <div class="cb-label">💬 Befehle · Rollen vergeben</div>
-      <code><span class="cmd-comment"># Lehrkraft als Operator setzen</span>
-<span class="cmd-slash">/op</span> <span class="cmd-keyword">LehrerName</span>
-
-<span class="cmd-comment"># SuS als Member setzen (Standard)</span>
-<span class="cmd-slash">/deop</span> <span class="cmd-keyword">SchuelerName</span>
-
-<span class="cmd-comment"># Worldbuilder-Rolle vergeben</span>
-<span class="cmd-slash">/worldbuilder</span> <span class="cmd-keyword">AssistenzName</span></code>
-    </div>
-
-    <div class="callout warn">
-      <span class="callout-icon">⚠️</span>
-      <div><strong>Wichtig:</strong> Gib niemals SuS Operator-Rechte in einer Unterrichtswelt. Selbst vertrauenswürdige SuS können aus Versehen Command Blocks zerstören oder Scoreboards zurücksetzen.</div>
+<div class="steps">
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <h4><span data-lang="de" class="visible">Spielmodus: Abenteuer</span><span data-lang="en">Game Mode: Adventure</span><span data-lang="zh">遊戲模式：冒險</span></h4>
+      <p><span data-lang="de" class="visible">SuS können Blöcke nur mit speziell erlaubtem Werkzeug abbauen → kein ungewolltes Zerstören.</span><span data-lang="en">Students can only break blocks with specifically allowed tools → no accidental destruction.</span><span data-lang="zh">學生只能使用特別允許的工具破壞方塊，防止意外破壞。</span></p>
     </div>
   </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <h4><span data-lang="de" class="visible">Cheats aktivieren</span><span data-lang="en">Enable Cheats</span><span data-lang="zh">啟用作弊</span></h4>
+      <p><span data-lang="de" class="visible">Für Command Blocks und NPCs müssen Cheats aktiviert sein.</span><span data-lang="en">Cheats must be enabled for Command Blocks and NPCs to work.</span><span data-lang="zh">指令方塊和 NPC 需要啟用作弊功能才能運作。</span></p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <h4><span data-lang="de" class="visible">Welttyp: Superflach</span><span data-lang="en">World Type: Superflat</span><span data-lang="zh">世界類型：超平坦</span></h4>
+      <p><span data-lang="de" class="visible">Saubere, leere Fläche ohne Berge oder Höhlen.</span><span data-lang="en">Clean, empty surface without mountains or caves.</span><span data-lang="zh">乾淨、平整的表面，沒有山脈或洞穴。</span></p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <h4><span data-lang="de" class="visible">Schwierigkeit: Friedlich</span><span data-lang="en">Difficulty: Peaceful</span><span data-lang="zh">難度：和平</span></h4>
+      <p><span data-lang="de" class="visible">Keine feindlichen Mobs → SuS fokussieren sich auf Lerninhalte.</span><span data-lang="en">No hostile mobs → students focus on learning content.</span><span data-lang="zh">沒有敵對生物，讓學生專注於學習內容。</span></p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">5</div>
+    <div class="step-content">
+      <h4><span data-lang="de" class="visible">Wetter & Tag/Nacht deaktivieren</span><span data-lang="en">Disable Weather & Day/Night</span><span data-lang="zh">停用天氣與晝夜循環</span></h4>
+      <p><span data-lang="de" class="visible">Konstante Sichtverhältnisse für alle SuS.</span><span data-lang="en">Consistent visibility for all students.</span><span data-lang="zh">為所有學生提供一致的視野條件。</span></p>
+    </div>
+  </div>
+</div>
 
-  <!-- ══════════════════════════════════════════════ -->
-  <!-- SECTION 3 -->
-  <!-- ══════════════════════════════════════════════ -->
+<h3>👥 <span data-lang="de" class="visible">Rollen</span><span data-lang="en">Roles</span><span data-lang="zh">角色</span></h3>
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th><span data-lang="de" class="visible">Rolle</span><span data-lang="en">Role</span><span data-lang="zh">角色</span></th>
+        <th><span data-lang="de" class="visible">Berechtigungen</span><span data-lang="en">Permissions</span><span data-lang="zh">權限</span></th>
+        <th><span data-lang="de" class="visible">Wann?</span><span data-lang="en">When?</span><span data-lang="zh">時機</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>🔴 Operator</td><td><span data-lang="de" class="visible">Alle Rechte</span><span data-lang="en">All rights</span><span data-lang="zh">所有權限</span></td><td><span data-lang="de" class="visible">Nur Lehrkraft</span><span data-lang="en">Teacher only</span><span data-lang="zh">僅教師</span></td></tr>
+      <tr><td>🟡 Worldbuilder</td><td><span data-lang="de" class="visible">Barriere-Blöcke</span><span data-lang="en">Barrier blocks</span><span data-lang="zh">屏障方塊</span></td><td><span data-lang="de" class="visible">Assistenz</span><span data-lang="en">Assistants</span><span data-lang="zh">助理</span></td></tr>
+      <tr><td>🟢 Member</td><td><span data-lang="de" class="visible">Standard-SuS</span><span data-lang="en">Standard student</span><span data-lang="zh">標準學生</span></td><td><span data-lang="de" class="visible">Alle SuS</span><span data-lang="en">All students</span><span data-lang="zh">所有學生</span></td></tr>
+      <tr><td>⚪ Visitor</td><td><span data-lang="de" class="visible">Nur beobachten</span><span data-lang="en">Observe only</span><span data-lang="zh">僅觀察</span></td><td><span data-lang="de" class="visible">Gäste</span><span data-lang="en">Guests</span><span data-lang="zh">訪客</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="code-block">
+  <div class="cb-label">💬 <span data-lang="de" class="visible">Rollen vergeben</span><span data-lang="en">Assign Roles</span><span data-lang="zh">指派角色</span></div>
+  <code><span class="cmd-comment"># <span data-lang="de" class="visible">Lehrkraft als Operator</span><span data-lang="en">Set teacher as operator</span><span data-lang="zh">將教師設為管理員</span></span>
+```
+
+<span class="cmd-slash">/op</span> <span class="cmd-keyword">LehrerName</span>
+
+<span class="cmd-comment"># <span data-lang="de" class="visible">SuS als Member setzen</span><span data-lang="en">Set student as member</span><span data-lang="zh">將學生設為成員</span></span>
+<span class="cmd-slash">/deop</span> <span class="cmd-keyword">SchuelerName</span></code>
+</div>
+
+```
+<div class="callout warn">
+  <span class="callout-icon">⚠️</span>
+  <div><strong><span data-lang="de" class="visible">Wichtig:</span><span data-lang="en">Important:</span><span data-lang="zh">重要：</span></strong>
+    <span data-lang="de" class="visible"> Gib niemals SuS Operator-Rechte in einer Unterrichtswelt.</span>
+    <span data-lang="en"> Never give students operator rights in a classroom world.</span>
+    <span data-lang="zh"> 絕對不要在教學世界中給予學生管理員權限。</span>
+  </div>
+</div>
+```
+
+  </div>
+
+  <!-- ═══ SECTION 3 ═══ -->
+
   <div class="section" id="s3">
     <div class="section-header">
       <span class="section-num">3</span>
       <span class="section-icon">🗺️</span>
-      <h2>Aufbau einer modularen Weltstruktur</h2>
+      <h2>
+        <span data-lang="de" class="visible">Weltstruktur</span>
+        <span data-lang="en">World Structure</span>
+        <span data-lang="zh">世界結構</span>
+      </h2>
     </div>
+    <p>
+      <span data-lang="de" class="visible">Eine professionelle Lernwelt folgt einer <strong>konsistenten, räumlichen Logik</strong>, die SuS intuitiv navigieren können.</span>
+      <span data-lang="en">A professional learning world follows a <strong>consistent spatial logic</strong> that students can navigate intuitively.</span>
+      <span data-lang="zh">專業的學習世界遵循<strong>一致的空間邏輯</strong>，讓學生能夠直覺地導航。</span>
+    </p>
 
-    <p>Eine professionelle Lernwelt folgt einer <strong>konsistenten, räumlichen Logik</strong>, die SuS intuitiv navigieren können, ohne sich zu verlaufen.</p>
+```
+<div class="arch" id="arch">
+```
 
-    <h3>🏗️ Empfohlene Welt-Architektur</h3>
+<span class="arch-title">LERNWELT · GRUNDRISS</span>
+<span class="arch-note">──────────────────────────────────</span>
+<span class="arch-zone">          SPAWN / 出生點</span>
+<span class="arch-block">    ┌─────────────────────────┐</span>
+<span class="arch-block">    │  🏫 Einstiegshalle      │</span>
+<span class="arch-block">    │  📜 Regeln · 🗺️ Karte   │</span>
+<span class="arch-block">    └────────────┬────────────┘</span>
+│
+<span class="arch-zone">    ┌───────────┴──────────────┐</span>
+<span class="arch-zone">    ▼                         ▼</span>
+<span class="arch-block">┌──────────┐           ┌──────────┐</span>
+<span class="arch-block">│  ZONE 1  │──────────►│  ZONE 2  │</span>
+<span class="arch-block">│  🟢 Grün │           │  🔵 Blau │</span>
+<span class="arch-block">└──────────┘           └────┬─────┘</span>
+│
+<span class="arch-block">                       ┌────▼─────┐</span>
+<span class="arch-block">                       │  ZONE 3  │</span>
+<span class="arch-block">                       │  🔴 Rot  │</span>
+<span class="arch-block">                       └────┬─────┘</span>
+│
+<span class="arch-block">              ┌─────────────▼──────────┐</span>
+<span class="arch-block">              │  🏆 TESTBEREICH        │</span>
+<span class="arch-block">              │  📝 Quiz · Scoreboard  │</span>
+<span class="arch-block">              └────────────────────────┘</span>
+<span class="arch-note">─── Lehrkraft-Bereich (Y < 0) ───</span>
+<span class="arch-block">┌────────────────────────────────┐</span>
+<span class="arch-block">│  ⚡ Command Blocks · 🔄 Reset  │</span>
+<span class="arch-block">└────────────────────────────────┘</span></div>
 
-    <div class="arch" id="arch">
-<span class="arch-title">LERNWELT · GRUNDRISS (Vogelperspektive)</span>
-<span class="arch-note">─────────────────────────────────────────────────────────</span>
+```
+<div class="code-block">
+  <div class="cb-label">🔑 <span data-lang="de" class="visible">Tür öffnen</span><span data-lang="en">Open Door</span><span data-lang="zh">開門</span></div>
+  <code><span class="cmd-slash">/execute</span> <span class="cmd-keyword">if score</span> <span class="cmd-value">@p Fortschritt</span> <span class="cmd-keyword">matches</span> <span class="cmd-value">1..</span> <span class="cmd-keyword">run</span>
+```
 
-<span class="arch-zone">                    SPAWN-BEREICH</span>
-<span class="arch-block">            ┌───────────────────────────────┐</span>
-<span class="arch-block">            │  🏫  Einstiegshalle            │</span>
-<span class="arch-block">            │  📜 Regeln · 🗺️ Karte · 🎯 Ziele │</span>
-<span class="arch-block">            │  🔒 Eingangstür (gesperrt)     │</span>
-<span class="arch-block">            └───────────────┬───────────────┘</span>
-                            │ Hauptweg
-<span class="arch-zone">         ┌──────────────────┴──────────────────┐</span>
-<span class="arch-zone">         ▼                                   ▼</span>
-<span class="arch-block">   ┌─────────────┐                    ┌──────────────┐</span>
-<span class="arch-block">   │  ZONE 1     │                    │   ZONE 2     │</span>
-<span class="arch-block">   │  🟢 Grün    │                    │   🔵 Blau    │</span>
-<span class="arch-block">   │  Grundlagen │───────────────────►│  Vertiefung  │</span>
-<span class="arch-block">   │  NPC · Quiz │                    │  Experiment  │</span>
-<span class="arch-block">   └─────────────┘                    └──────┬───────┘</span>
-                                             │
-<span class="arch-block">                                      ┌──────▼───────┐</span>
-<span class="arch-block">                                      │   ZONE 3     │</span>
-<span class="arch-block">                                      │   🔴 Rot     │</span>
-<span class="arch-block">                                      │  Anwendung   │</span>
-<span class="arch-block">                                      │  Bauprojekt  │</span>
-<span class="arch-block">                                      └──────┬───────┘</span>
-                                             │
-<span class="arch-block">                              ┌──────────────▼──────────────┐</span>
-<span class="arch-block">                              │        TESTBEREICH          │</span>
-<span class="arch-block">                              │  📝 Quiz · 🏆 Scoreboard    │</span>
-<span class="arch-block">                              │  🔒 Nur bei Freischaltung   │</span>
-<span class="arch-block">                              └─────────────────────────────┘</span>
+<span class="cmd-slash">setblock</span> <span class="cmd-value">~0 ~1 ~0 air</span></code>
+</div>
 
-<span class="arch-note">         ↑ Separater Bereich (unsichtbar für SuS)</span>
-<span class="arch-block">┌──────────────────────────────────────┐</span>
-<span class="arch-block">│  LEHRKRAFT-BEREICH (unter Y=0)       │</span>
-<span class="arch-block">│  ⚡ Command Blocks · 💾 Datenspeicher │</span>
-<span class="arch-block">│  🔧 Wartung · 🔄 Reset-System        │</span>
-<span class="arch-block">└──────────────────────────────────────┘</span></div>
-
-    <h3>📐 Koordinatensystem & Abstände</h3>
-    <div class="card-grid">
-      <div class="card blue">
-        <h4>🌐 Spawn-Bereich</h4>
-        <ul>
-          <li>Koordinate: X=0, Z=0, Y=65</li>
-          <li>Größe: ca. 20×20 Blöcke</li>
-          <li>Enthält: Karte, Regeln, NPC</li>
-        </ul>
-      </div>
-      <div class="card green">
-        <h4>🟢 Zone 1 (Grundlagen)</h4>
-        <ul>
-          <li>Koordinate: X=+40, Z=0</li>
-          <li>Größe: ca. 30×30 Blöcke</li>
-          <li>Farbcode: Grüne Blöcke/Böden</li>
-        </ul>
-      </div>
-      <div class="card blue">
-        <h4>🔵 Zone 2 (Vertiefung)</h4>
-        <ul>
-          <li>Koordinate: X=+80, Z=0</li>
-          <li>Größe: ca. 30×30 Blöcke</li>
-          <li>Farbcode: Blaue Blöcke/Böden</li>
-        </ul>
-      </div>
-      <div class="card gold">
-        <h4>🔴 Zone 3 (Anwendung)</h4>
-        <ul>
-          <li>Koordinate: X=+120, Z=0</li>
-          <li>Größe: ca. 40×40 Blöcke</li>
-          <li>Farbcode: Rote/orangefarbene Böden</li>
-        </ul>
-      </div>
-    </div>
-
-    <h3>🔒 Türen zwischen Zonen</h3>
-    <p>SuS können Zonen <strong>nur in der richtigen Reihenfolge</strong> betreten. Türen öffnen sich per Command Block, wenn das Scoreboard die nötige Punktzahl zeigt:</p>
-
-    <div class="code-block">
-      <div class="cb-label">🔑 Command Block · Tür öffnen wenn Modul 1 abgeschlossen</div>
-      <code><span class="cmd-comment"># Bedingungs-Block (konditionell) - prüft Score</span>
-<span class="cmd-slash">/execute</span> <span class="cmd-keyword">if score</span> <span class="cmd-value">@p Fortschritt</span> <span class="cmd-keyword">matches</span> <span class="cmd-value">1..</span> <span class="cmd-keyword">run</span>
-  <span class="cmd-slash">setblock</span> <span class="cmd-value">~0 ~1 ~0 air</span>
-
-<span class="cmd-comment"># Oder: Spawnpunkt setzen wenn in Zone angekommen</span>
-<span class="cmd-slash">/execute</span> <span class="cmd-keyword">as @a[x=38,y=64,z=-2,dx=4,dy=3,dz=4]</span>
-  <span class="cmd-keyword">run</span> <span class="cmd-slash">spawnpoint</span> <span class="cmd-value">@s 40 65 0</span></code>
-    </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════ -->
-  <!-- SECTION 4 -->
-  <!-- ══════════════════════════════════════════════ -->
+  <!-- ═══ SECTION 4 ═══ -->
+
   <div class="section" id="s4">
     <div class="section-header">
       <span class="section-num">4</span>
       <span class="section-icon">📊</span>
-      <h2>Scoreboards für Fortschritt und Aufgaben</h2>
+      <h2>Scoreboards</h2>
     </div>
+    <p>
+      <span data-lang="de" class="visible">Scoreboards sind das <strong>Nervensystem</strong> deiner Lernwelt — sie tracken Punkte, Status und freigeschaltete Zonen.</span>
+      <span data-lang="en">Scoreboards are the <strong>nervous system</strong> of your learning world — they track points, status, and unlocked zones.</span>
+      <span data-lang="zh">計分板是你的學習世界的<strong>神經系統</strong>——追蹤積分、狀態和已解鎖的區域。</span>
+    </p>
 
-    <p>Scoreboards sind das <strong>Nervensystem</strong> deiner Lernwelt. Sie tracken Punkte, Aufgaben-Status, freigeschaltete Zonen und können sogar Zeitlimits messen.</p>
+```
+<div class="code-block">
+  <div class="cb-label">💻 <span data-lang="de" class="visible">Scoreboard Setup</span><span data-lang="en">Scoreboard Setup</span><span data-lang="zh">計分板設定</span></div>
+  <code><span class="cmd-comment"># <span data-lang="de" class="visible">Scoreboard erstellen</span><span data-lang="en">Create scoreboard</span><span data-lang="zh">建立計分板</span></span>
+```
 
-    <h3>🛠️ Scoreboard anlegen</h3>
-    <div class="code-block">
-      <div class="cb-label">💻 Scoreboard-Setup · Einmalig beim Start</div>
-      <code><span class="cmd-comment"># Haupt-Fortschritts-Scoreboard erstellen</span>
-<span class="cmd-slash">/scoreboard objectives add</span> <span class="cmd-keyword">Fortschritt</span> <span class="cmd-value">dummy</span> <span class="cmd-value">"📊 Mein Fortschritt"</span>
+<span class="cmd-slash">/scoreboard objectives add</span> <span class="cmd-keyword">Fortschritt</span> <span class="cmd-value">dummy “📊 Progress”</span>
 
-<span class="cmd-comment"># Aufgaben-Scoreboard (0=offen, 1=erledigt)</span>
-<span class="cmd-slash">/scoreboard objectives add</span> <span class="cmd-keyword">Aufgaben</span> <span class="cmd-value">dummy</span> <span class="cmd-value">"✅ Aufgaben"</span>
-
-<span class="cmd-comment"># Scoreboard auf der Seite anzeigen</span>
+<span class="cmd-comment"># <span data-lang="de" class="visible">Anzeigen</span><span data-lang="en">Display</span><span data-lang="zh">顯示</span></span>
 <span class="cmd-slash">/scoreboard objectives setdisplay</span> <span class="cmd-keyword">sidebar</span> <span class="cmd-value">Fortschritt</span>
 
-<span class="cmd-comment"># Punkte einem Spieler manuell geben (Test)</span>
+<span class="cmd-comment"># +1 <span data-lang="de" class="visible">Punkt für alle</span><span data-lang="en">point for all</span><span data-lang="zh">分給所有人</span></span>
 <span class="cmd-slash">/scoreboard players add</span> <span class="cmd-keyword">@a</span> <span class="cmd-value">Fortschritt 1</span>
 
-<span class="cmd-comment"># Score eines Spielers zurücksetzen</span>
-<span class="cmd-slash">/scoreboard players set</span> <span class="cmd-keyword">@a</span> <span class="cmd-value">Fortschritt 0</span>
+<span class="cmd-comment"># <span data-lang="de" class="visible">Zurücksetzen</span><span data-lang="en">Reset all</span><span data-lang="zh">重置全部</span></span>
+<span class="cmd-slash">/scoreboard players set</span> <span class="cmd-keyword">@a</span> <span class="cmd-value">Fortschritt 0</span></code>
+</div>
 
-<span class="cmd-comment"># Score anzeigen lassen (für Lehrkraft)</span>
-<span class="cmd-slash">/scoreboard players list</span></code>
-    </div>
+```
+<div class="callout info">
+  <span class="callout-icon">ℹ️</span>
+  <div>
+    <span data-lang="de" class="visible">Nutze separate Scoreboards für <em>Fortschritt</em>, <em>Quiz-Punkte</em> und <em>Zeit</em> — das erleichtert das Debugging erheblich.</span>
+    <span data-lang="en">Use separate scoreboards for <em>progress</em>, <em>quiz points</em>, and <em>time</em> — it makes debugging much easier.</span>
+    <span data-lang="zh">為<em>進度</em>、<em>測驗分數</em>和<em>時間</em>使用獨立計分板，這樣除錯更容易。</span>
+  </div>
+</div>
+```
 
-    <h3>🎯 Fortschrittspunkte automatisch vergeben</h3>
-    <p>Platziere Command Blocks in jeder Zone. Sie prüfen permanent, ob SuS in der Nähe sind und vergeben Punkte:</p>
-
-    <div class="code-block">
-      <div class="cb-label">⚡ Repeat-Command-Block (läuft jede Sekunde)</div>
-      <code><span class="cmd-comment"># Spieler in Zone 1 erkannt → Aufgabe 1 als erledigt markieren</span>
-<span class="cmd-slash">/execute</span> <span class="cmd-keyword">as @a[x=30,y=64,z=-15,dx=20,dy=5,dz=20]</span>
-  <span class="cmd-keyword">if score @s Aufgaben1 matches 0</span>
-  <span class="cmd-keyword">run</span> <span class="cmd-slash">scoreboard players set</span> <span class="cmd-value">@s Aufgaben1 1</span>
-
-<span class="cmd-comment"># Wenn Aufgabe1=1 UND Aufgabe2=1 → Modul abgeschlossen</span>
-<span class="cmd-slash">/execute</span> <span class="cmd-keyword">as @a</span>
-  <span class="cmd-keyword">if score @s Aufgaben1 matches 1</span>
-  <span class="cmd-keyword">if score @s Aufgaben2 matches 1</span>
-  <span class="cmd-keyword">run</span> <span class="cmd-slash">scoreboard players add</span> <span class="cmd-value">@s Fortschritt 1</span></code>
-    </div>
-
-    <div class="callout info">
-      <span class="callout-icon">ℹ️</span>
-      <div><strong>Scoreboard-Struktur empfohlen:</strong> Nutze separate Scoreboards für <em>Fortschritt</em>, <em>Quiz-Punkte</em> und <em>Zeit</em>. Mische nicht alles in einem — das macht Debugging viel einfacher.</div>
-    </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════ -->
-  <!-- SECTION 5 -->
-  <!-- ══════════════════════════════════════════════ -->
+  <!-- ═══ SECTION 5 ═══ -->
+
   <div class="section" id="s5">
     <div class="section-header">
       <span class="section-num">5</span>
       <span class="section-icon">⚡</span>
-      <h2>Command Blocks: Türen, Bedingungen, Automatisierung</h2>
+      <h2>Command Blocks</h2>
     </div>
 
-    <p>Command Blocks sind die <strong>Logik-Schicht</strong> deiner Welt. Verstehe die drei Typen, bevor du anfängst:</p>
+```
+<div class="card-grid">
+  <div class="card green">
+    <h4>🟧 Impulse</h4>
+    <ul>
+      <li><span data-lang="de" class="visible">Läuft <strong>einmal</strong></span><span data-lang="en">Runs <strong>once</strong></span><span data-lang="zh">執行<strong>一次</strong></span></li>
+      <li><span data-lang="de" class="visible">Türen öffnen, Items geben</span><span data-lang="en">Open doors, give items</span><span data-lang="zh">開門、給予物品</span></li>
+    </ul>
+  </div>
+  <div class="card blue">
+    <h4>🟦 Repeat</h4>
+    <ul>
+      <li><span data-lang="de" class="visible">Läuft <strong>dauerhaft</strong> (20×/s)</span><span data-lang="en">Runs <strong>continuously</strong> (20×/s)</span><span data-lang="zh"><strong>持續</strong>執行 (20次/秒)</span></li>
+      <li><span data-lang="de" class="visible">Score-Checks, Positions-Checks</span><span data-lang="en">Score checks, position checks</span><span data-lang="zh">積分檢查、位置檢查</span></li>
+    </ul>
+  </div>
+  <div class="card gold">
+    <h4>🟩 Chain</h4>
+    <ul>
+      <li><span data-lang="de" class="visible">Läuft nach dem <strong>vorherigen</strong> Block</span><span data-lang="en">Runs after the <strong>previous</strong> block</span><span data-lang="zh">在<strong>前一個</strong>方塊後執行</span></li>
+      <li><span data-lang="de" class="visible">Mehrstufige Aktionen</span><span data-lang="en">Multi-step actions</span><span data-lang="zh">多步驟動作</span></li>
+    </ul>
+  </div>
+</div>
 
-    <div class="card-grid">
-      <div class="card green">
-        <h4>🟧 Impulse-Block</h4>
-        <ul>
-          <li>Läuft <strong>einmal</strong> pro Aktivierung</li>
-          <li>Für: Türen öffnen, Items geben</li>
-          <li>Trigger: Redstone-Signal</li>
-        </ul>
-      </div>
-      <div class="card blue">
-        <h4>🟦 Repeat-Block</h4>
-        <ul>
-          <li>Läuft <strong>dauerhaft</strong> (20×/sek.)</li>
-          <li>Für: Score-Checks, Positions-Checks</li>
-          <li>Trigger: Immer aktiv</li>
-        </ul>
-      </div>
-      <div class="card gold">
-        <h4>🟩 Chain-Block</h4>
-        <ul>
-          <li>Läuft nach dem <strong>vorherigen Block</strong></li>
-          <li>Für: Mehrstufige Aktionen</li>
-          <li>Reihenfolge beachten</li>
-        </ul>
-      </div>
-    </div>
+<div class="code-block">
+  <div class="cb-label">🚪 <span data-lang="de" class="visible">Tür + Nachricht</span><span data-lang="en">Door + Message</span><span data-lang="zh">開門 + 訊息</span></div>
+  <code><span class="cmd-comment"># <span data-lang="de" class="visible">Tür öffnen</span><span data-lang="en">Open door</span><span data-lang="zh">開門</span></span>
+```
 
-    <h3>🚪 Automatische Türen</h3>
-    <div class="code-block">
-      <div class="cb-label">🚪 Tür öffnen/schließen · Druckplatte → Command Block</div>
-      <code><span class="cmd-comment"># Tür öffnen: Eisentor entfernen (Block ersetzen durch Luft)</span>
 <span class="cmd-slash">/setblock</span> <span class="cmd-value">40 65 0</span> <span class="cmd-keyword">air</span>
-<span class="cmd-slash">/setblock</span> <span class="cmd-value">40 66 0</span> <span class="cmd-keyword">air</span>
 
-<span class="cmd-comment"># Spieler teleportieren wenn Score ausreicht</span>
-<span class="cmd-slash">/execute</span> <span class="cmd-keyword">if score @p Fortschritt matches 1..</span>
-  <span class="cmd-keyword">run</span> <span class="cmd-slash">tp</span> <span class="cmd-value">@p 42 65 0</span>
-
-<span class="cmd-comment"># Nachricht wenn Score NICHT ausreicht</span>
+<span class="cmd-comment"># <span data-lang="de" class="visible">Nachricht wenn gesperrt</span><span data-lang="en">Message if locked</span><span data-lang="zh">鎖定時顯示訊息</span></span>
 <span class="cmd-slash">/execute</span> <span class="cmd-keyword">unless score @p Fortschritt matches 1..</span>
-  <span class="cmd-keyword">run</span> <span class="cmd-slash">tellraw</span> <span class="cmd-value">@p</span>
-  <span class="cmd-value">{"text":"🔒 Schließe zuerst Zone 1 ab!","color":"red"}</span></code>
-    </div>
+<span class="cmd-keyword">run</span> <span class="cmd-slash">tellraw</span> <span class="cmd-value">@p {“text”:“🔒 Zone 1 first!”,“color”:“red”}</span>
 
-    <h3>📢 Nachrichten und Hinweise</h3>
-    <div class="code-block">
-      <div class="cb-label">💬 Nachrichten an SuS senden</div>
-      <code><span class="cmd-comment"># Einfache Chatnachricht an alle</span>
-<span class="cmd-slash">/say</span> <span class="cmd-value">Willkommen in Zone 2! Lies das Schild links.</span>
+<span class="cmd-comment"># <span data-lang="de" class="visible">Titel einblenden</span><span data-lang="en">Show title</span><span data-lang="zh">顯示標題</span></span>
+<span class="cmd-slash">/title</span> <span class="cmd-keyword">@a</span> <span class="cmd-value">title {“text”:“🏆 Modul OK!”,“color”:“gold”}</span></code>
+</div>
 
-<span class="cmd-comment"># Formatierte Nachricht (JSON) nur an Spieler in der Nähe</span>
-<span class="cmd-slash">/tellraw</span> <span class="cmd-keyword">@a[r=10]</span>
-  <span class="cmd-value">{"text":"✅ Aufgabe 1 erledigt! +1 Punkt","color":"green","bold":true}</span>
+```
+<div class="callout tip">
+  <span class="callout-icon">💡</span>
+  <div>
+    <span data-lang="de" class="visible">Alle Command Blocks unter die Erde (Y = 10–50) — SuS sehen und zerstören sie nicht.</span>
+    <span data-lang="en">Place all command blocks underground (Y = 10–50) — students won't see or destroy them.</span>
+    <span data-lang="zh">將所有指令方塊放在地下（Y = 10–50），學生就看不到也無法破壞它們。</span>
+  </div>
+</div>
+```
 
-<span class="cmd-comment"># Titel-Einblendung (groß im Bildschirmzentrum)</span>
-<span class="cmd-slash">/title</span> <span class="cmd-keyword">@a</span> <span class="cmd-value">title</span>
-  <span class="cmd-value">{"text":"🏆 Modul abgeschlossen!","color":"gold"}</span>
-<span class="cmd-slash">/title</span> <span class="cmd-keyword">@a</span> <span class="cmd-value">subtitle</span>
-  <span class="cmd-value">{"text":"Weiter zu Zone 2","color":"white"}</span></code>
-    </div>
-
-    <h3>🎒 Items vergeben</h3>
-    <div class="code-block">
-      <div class="cb-label">📦 Items an SuS geben</div>
-      <code><span class="cmd-comment"># Buch als Aufgabenblatt geben</span>
-<span class="cmd-slash">/give</span> <span class="cmd-keyword">@p</span> <span class="cmd-value">written_book 1 0</span>
-  <span class="cmd-value">{"title":"Aufgabenblatt M1","author":"Frau Muster",</span>
-   <span class="cmd-value">"pages":["Lies die drei Schilder und beantworte..."]}</span>
-
-<span class="cmd-comment"># Werkzeug mit eingeschränkter Nutzung</span>
-<span class="cmd-slash">/give</span> <span class="cmd-keyword">@p</span> <span class="cmd-value">wooden_pickaxe 1 0</span>
-  <span class="cmd-value">{"CanDestroy":["stone","dirt"]}</span></code>
-    </div>
-
-    <div class="callout tip">
-      <span class="callout-icon">💡</span>
-      <div><strong>Tipp:</strong> Platziere alle Command Blocks unter der Erde (Y = 10–50), damit SuS sie weder sehen noch versehentlich zerstören können.</div>
-    </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════ -->
-  <!-- SECTION 6 -->
-  <!-- ══════════════════════════════════════════════ -->
+  <!-- ═══ SECTION 6 ═══ -->
+
   <div class="section" id="s6">
     <div class="section-header">
       <span class="section-num">6</span>
       <span class="section-icon">🤖</span>
-      <h2>NPCs: Aufgaben, Hinweise und Interaktion</h2>
+      <h2>NPCs</h2>
     </div>
+    <p>
+      <span data-lang="de" class="visible">NPCs sind die <strong>virtuellen Lehrassistenten</strong> — sie erklären Aufgaben, geben Hinweise und vergeben Punkte.</span>
+      <span data-lang="en">NPCs are the <strong>virtual teaching assistants</strong> — they explain tasks, give hints, and award points.</span>
+      <span data-lang="zh">NPC 是<strong>虛擬教學助理</strong>——解釋任務、提供提示並獎勵積分。</span>
+    </p>
 
-    <p>NPCs (Non-Player Characters) sind die <strong>virtuellen Lehrassistenten</strong> deiner Welt. Sie können Aufgaben erklären, Hinweise geben, Punkte vergeben und sogar Befehle ausführen.</p>
+```
+<div class="code-block">
+  <div class="cb-label">🧍 <span data-lang="de" class="visible">NPC spawnen</span><span data-lang="en">Spawn NPC</span><span data-lang="zh">生成 NPC</span></div>
+  <code><span class="cmd-slash">/summon</span> <span class="cmd-keyword">npc</span> <span class="cmd-value">~ ~ ~</span> <span class="cmd-value">"Prof. Block"</span>
+```
 
-    <h3>👾 NPC erstellen und konfigurieren</h3>
-    <div class="code-block">
-      <div class="cb-label">🧍 NPC spawnen</div>
-      <code><span class="cmd-comment"># NPC an aktueller Position spawnen</span>
-<span class="cmd-slash">/summon</span> <span class="cmd-keyword">npc</span> <span class="cmd-value">~ ~ ~</span> <span class="cmd-value">"Prof. Block"</span>
+<span class="cmd-slash">/summon</span> <span class="cmd-keyword">npc</span> <span class="cmd-value">42 65 5</span> <span class="cmd-value">“Tutor Steini”</span></code>
+</div>
 
-<span class="cmd-comment"># NPC an bestimmten Koordinaten spawnen</span>
-<span class="cmd-slash">/summon</span> <span class="cmd-keyword">npc</span> <span class="cmd-value">42 65 5</span> <span class="cmd-value">"Tutor Steini"</span></code>
-    </div>
+```
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th><span data-lang="de" class="visible">NPC-Typ</span><span data-lang="en">NPC Type</span><span data-lang="zh">NPC 類型</span></th>
+        <th><span data-lang="de" class="visible">Position</span><span data-lang="en">Position</span><span data-lang="zh">位置</span></th>
+        <th><span data-lang="de" class="visible">Funktion</span><span data-lang="en">Function</span><span data-lang="zh">功能</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>🏫 <span data-lang="de" class="visible">Willkommen</span><span data-lang="en">Welcome</span><span data-lang="zh">歡迎</span></td><td>Spawn</td><td><span data-lang="de" class="visible">Regeln, Orientierung</span><span data-lang="en">Rules, orientation</span><span data-lang="zh">規則、定向</span></td></tr>
+      <tr><td>📖 <span data-lang="de" class="visible">Erklärung</span><span data-lang="en">Explanation</span><span data-lang="zh">說明</span></td><td><span data-lang="de" class="visible">Zonenanfang</span><span data-lang="en">Zone start</span><span data-lang="zh">區域開頭</span></td><td><span data-lang="de" class="visible">Aufgaben erklären</span><span data-lang="en">Explain tasks</span><span data-lang="zh">解釋任務</span></td></tr>
+      <tr><td>💡 <span data-lang="de" class="visible">Hinweis</span><span data-lang="en">Hint</span><span data-lang="zh">提示</span></td><td><span data-lang="de" class="visible">Zonenmitte</span><span data-lang="en">Zone middle</span><span data-lang="zh">區域中間</span></td><td><span data-lang="de" class="visible">Tipps geben</span><span data-lang="en">Give hints</span><span data-lang="zh">給予提示</span></td></tr>
+      <tr><td>✅ Check</td><td><span data-lang="de" class="visible">Zonenende</span><span data-lang="en">Zone end</span><span data-lang="zh">區域結尾</span></td><td><span data-lang="de" class="visible">Punkte vergeben</span><span data-lang="en">Award points</span><span data-lang="zh">獎勵積分</span></td></tr>
+    </tbody>
+  </table>
+</div>
+```
 
-    <p>Klicke auf den NPC, um das NPC-Menü zu öffnen. Dort kannst du einstellen:</p>
-
-    <div class="card-grid">
-      <div class="card green">
-        <h4>💬 Dialog-Text</h4>
-        <p style="font-size:.82rem">Schreibe erklärende Texte, Aufgabenbeschreibungen oder Hinweise. Unterstützt Zeilenumbrüche mit <code>\n</code>.</p>
-      </div>
-      <div class="card blue">
-        <h4>🔘 Schaltflächen</h4>
-        <p style="font-size:.82rem">Bis zu 6 Schaltflächen pro NPC, jede kann einen Befehl ausführen: URL öffnen, Befehl im Hintergrund, NPC schließen.</p>
-      </div>
-      <div class="card gold">
-        <h4>🎨 Aussehen</h4>
-        <p style="font-size:.82rem">Wähle Skin aus der Bibliothek oder lade einen eigenen hoch. Name über dem NPC ist sichtbar.</p>
-      </div>
-    </div>
-
-    <h3>📋 NPC-Aufgaben-System</h3>
-    <p>Beispiel: NPC gibt Aufgabe, prüft Lösung via Befehl:</p>
-
-    <div class="card dark">
-      <h4 style="color:#ffcc02;font-size:.9rem">📝 NPC-Konfiguration: "Quiz-NPC Zone 1"</h4>
-      <div style="margin-top:8px">
-        <p style="font-size:.8rem;color:#90caf9;margin-bottom:6px"><strong>Dialog-Text:</strong></p>
-        <p style="font-size:.8rem;color:#a8ff78;font-family:monospace;line-height:1.6">
-          Hallo! Ich bin dein Aufgaben-NPC.<br>
-          Deine Aufgabe: Finde die 3 roten Schilder in dieser Zone<br>
-          und merke dir, was drauf steht!<br><br>
-          Wenn du alle 3 gefunden hast, klicke auf "Fertig"!
-        </p>
-        <p style="font-size:.8rem;color:#90caf9;margin-top:10px;margin-bottom:6px"><strong>Schaltfläche "Fertig" → Befehl:</strong></p>
-        <p style="font-size:.8rem;color:#a8ff78;font-family:monospace">
-          /scoreboard players set @initiator Aufgaben1 1<br>
-          /title @initiator title {"text":"✅ Super!","color":"green"}<br>
-          /scoreboard players add @initiator Fortschritt 1
-        </p>
-      </div>
-    </div>
-
-    <h3>📚 NPC-Rollen in der Lernwelt</h3>
-    <table>
-      <thead><tr><th>NPC-Typ</th><th>Position</th><th>Funktion</th></tr></thead>
-      <tbody>
-        <tr><td>🏫 Willkommens-NPC</td><td>Spawn</td><td>Regeln, Orientierung, Welteinführung</td></tr>
-        <tr><td>📖 Erklärungs-NPC</td><td>Anfang jeder Zone</td><td>Lerninhalt einführen, Aufgaben erklären</td></tr>
-        <tr><td>💡 Hinweis-NPC</td><td>Mitte jeder Zone</td><td>Tipps bei Schwierigkeiten, Scaffold</td></tr>
-        <tr><td>✅ Check-NPC</td><td>Ende jeder Zone</td><td>Aufgaben abnahmen, Punkte vergeben</td></tr>
-        <tr><td>🏆 Abschluss-NPC</td><td>Testbereich</td><td>Herzlichen Glückwunsch, Zertifikat</td></tr>
-      </tbody>
-    </table>
   </div>
 
-  <!-- ══════════════════════════════════════════════ -->
-  <!-- SECTION 7 -->
-  <!-- ══════════════════════════════════════════════ -->
+  <!-- ═══ SECTION 7 ═══ -->
+
   <div class="section" id="s7">
     <div class="section-header">
       <span class="section-num">7</span>
       <span class="section-icon">🛡️</span>
-      <h2>Absicherung von Bereichen</h2>
+      <h2>
+        <span data-lang="de" class="visible">Absicherung</span>
+        <span data-lang="en">Security</span>
+        <span data-lang="zh">安全防護</span>
+      </h2>
     </div>
 
-    <p>Ohne klare Grenzen werden SuS über kurz oder lang in ungewollte Bereiche gelangen — oder die Struktur zerstören. Nutze alle verfügbaren Mechanismen zur Absicherung.</p>
+```
+<div class="code-block">
+  <div class="cb-label">🚧 <span data-lang="de" class="visible">Barrieren & Sperren</span><span data-lang="en">Barriers & Restrictions</span><span data-lang="zh">屏障與限制</span></div>
+  <code><span class="cmd-comment"># <span data-lang="de" class="visible">Unsichtbare Box um eine Zone</span><span data-lang="en">Invisible box around a zone</span><span data-lang="zh">區域的不可見方塊</span></span>
+```
 
-    <h3>🧱 Barriere-Blöcke</h3>
-    <p>Barriere-Blöcke sind unsichtbar für SuS, blockieren aber Bewegung vollständig. Ideal für unsichtbare Wände:</p>
-
-    <div class="code-block">
-      <div class="cb-label">🚧 Barriere-Blöcke platzieren</div>
-      <code><span class="cmd-comment"># Einzelnen Barriere-Block setzen</span>
-<span class="cmd-slash">/setblock</span> <span class="cmd-value">~ ~ ~</span> <span class="cmd-keyword">barrier</span>
-
-<span class="cmd-comment"># Linie aus Barriere-Blöcken (Breite 1, Länge 20)</span>
-<span class="cmd-slash">/fill</span> <span class="cmd-value">0 65 -10</span> <span class="cmd-value">0 70 10</span> <span class="cmd-keyword">barrier</span>
-
-<span class="cmd-comment"># Komplette unsichtbare Box um eine Zone</span>
 <span class="cmd-slash">/fill</span> <span class="cmd-value">30 64 -15</span> <span class="cmd-value">70 80 15</span> <span class="cmd-keyword">barrier</span> <span class="cmd-value">0 outline</span>
 
-<span class="cmd-comment"># Barrieren sichtbar machen (nur für Worldbuilder/OP)</span>
-<span class="cmd-comment"># Barrieren erscheinen als rote Blöcke mit X im Kreativ-Modus</span></code>
-    </div>
-
-    <h3>🚫 Befehlssperren</h3>
-    <div class="code-block">
-      <div class="cb-label">🔒 SuS-Berechtigungen einschränken</div>
-      <code><span class="cmd-comment"># SuS können keine Blöcke in Zone 1 abbauen</span>
-<span class="cmd-slash">/gamemode</span> <span class="cmd-keyword">adventure</span> <span class="cmd-value">@a[tag=!lehrer]</span>
-
-<span class="cmd-comment"># Fliegen für alle SuS deaktivieren</span>
+<span class="cmd-comment"># <span data-lang="de" class="visible">Fliegen deaktivieren</span><span data-lang="en">Disable flying</span><span data-lang="zh">停用飛行</span></span>
 <span class="cmd-slash">/ability</span> <span class="cmd-keyword">@a[tag=!lehrer]</span> <span class="cmd-value">mayfly false</span>
 
-<span class="cmd-comment"># Bauen/Abbauen für alle SuS deaktivieren</span>
-<span class="cmd-slash">/ability</span> <span class="cmd-keyword">@a[tag=!lehrer]</span> <span class="cmd-value">mute false</span>
+<span class="cmd-comment"># <span data-lang="de" class="visible">Weltgrenze setzen</span><span data-lang="en">Set world border</span><span data-lang="zh">設定世界邊界</span></span>
+<span class="cmd-slash">/worldborder set</span> <span class="cmd-value">200</span></code>
+</div>
 
-<span class="cmd-comment"># SuS können keine Befehle nutzen</span>
-<span class="cmd-slash">/ability</span> <span class="cmd-keyword">@a[tag=!lehrer]</span> <span class="cmd-value">operator false</span></code>
-    </div>
+```
+<div class="callout danger">
+  <span class="callout-icon">🚨</span>
+  <div>
+    <strong><span data-lang="de" class="visible">Check vor dem Unterricht:</span><span data-lang="en">Pre-class check:</span><span data-lang="zh">課前檢查：</span></strong>
+    <span data-lang="de" class="visible"> Teste die Welt als normaler SuS — deop dich temporär und versuche aktiv, gesperrte Bereiche zu erreichen.</span>
+    <span data-lang="en"> Test the world as a normal student — temporarily deop yourself and actively try to reach restricted areas.</span>
+    <span data-lang="zh"> 以普通學生身份測試世界——暫時取消管理員身份，主動嘗試進入受限區域。</span>
+  </div>
+</div>
+```
 
-    <h3>🗺️ Weltgrenze setzen</h3>
-    <div class="code-block">
-      <div class="cb-label">🌍 Weltbegrenzung</div>
-      <code><span class="cmd-comment"># Weltgrenze auf 200 Blöcke Radius setzen</span>
-<span class="cmd-slash">/worldborder set</span> <span class="cmd-value">200</span>
-
-<span class="cmd-comment"># Warngrenze anzeigen (ab 50 Blöcke vor Grenze)</span>
-<span class="cmd-slash">/worldborder warning distance</span> <span class="cmd-value">50</span></code>
-    </div>
-
-    <div class="callout danger">
-      <span class="callout-icon">🚨</span>
-      <div><strong>Sicherheits-Checkliste vor dem Unterricht:</strong> Teste die Welt <em>als normaler SuS</em> (deop dich selbst temporär). Versuche aktiv, Bereiche zu erreichen, die gesperrt sein sollten. Finde Lücken, bevor es die SuS tun.</div>
-    </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════ -->
-  <!-- SECTION 8 -->
-  <!-- ══════════════════════════════════════════════ -->
+  <!-- ═══ SECTION 8 ═══ -->
+
   <div class="section" id="s8">
     <div class="section-header">
       <span class="section-num">8</span>
       <span class="section-icon">🧩</span>
-      <h2>Strukturblöcke für wiederverwendbare Module</h2>
+      <h2>
+        <span data-lang="de" class="visible">Strukturblöcke</span>
+        <span data-lang="en">Structure Blocks</span>
+        <span data-lang="zh">結構方塊</span>
+      </h2>
     </div>
+    <p>
+      <span data-lang="de" class="visible">Strukturblöcke erlauben dir, Gebäude zu <strong>speichern und beliebig oft einzufügen</strong> — perfekt für Quiz-Räume und Templates.</span>
+      <span data-lang="en">Structure blocks let you <strong>save and reuse buildings</strong> — perfect for quiz rooms and templates.</span>
+      <span data-lang="zh">結構方塊讓你可以<strong>儲存並重複使用建築</strong>——非常適合測驗室和模板。</span>
+    </p>
 
-    <p>Strukturblöcke (Structure Blocks) erlauben dir, <strong>Gebäude zu speichern und beliebig oft einzufügen</strong>. Perfekt für Quiz-Räume, Aufgaben-Stationen und Klassenzimmer-Templates.</p>
+```
+<div class="code-block">
+  <div class="cb-label">📦 <span data-lang="de" class="visible">Strukturen laden</span><span data-lang="en">Load Structures</span><span data-lang="zh">載入結構</span></div>
+  <code><span class="cmd-slash">/give</span> <span class="cmd-keyword">@s</span> <span class="cmd-value">structure_block</span>
+```
 
-    <h3>🔧 Strukturblock aktivieren</h3>
-    <div class="code-block">
-      <div class="cb-label">🧱 Strukturblock in der Hand</div>
-      <code><span class="cmd-comment"># Strukturblock erhalten (nur im Kreativ-Modus)</span>
-<span class="cmd-slash">/give</span> <span class="cmd-keyword">@s</span> <span class="cmd-value">structure_block</span>
+<span class="cmd-slash">/structure load</span> <span class="cmd-keyword">quiz_raum_1</span> <span class="cmd-value">40 65 20</span></code>
+</div>
 
-<span class="cmd-comment"># Oder per Befehl direkt setzen</span>
-<span class="cmd-slash">/setblock</span> <span class="cmd-value">~ ~ ~</span> <span class="cmd-keyword">structure_block</span></code>
-    </div>
+```
+<div class="card-grid">
+  <div class="card"><h4>🏠 <span data-lang="de" class="visible">Basis</span><span data-lang="en">Basic</span><span data-lang="zh">基礎</span></h4><ul><li><code>spawn_halle</code></li><li><code>npc_station</code></li><li><code>quiz_raum</code></li></ul></div>
+  <div class="card"><h4>🎓 <span data-lang="de" class="visible">Lernen</span><span data-lang="en">Learning</span><span data-lang="zh">學習</span></h4><ul><li><code>lernzone_basis</code></li><li><code>laboraufbau</code></li><li><code>bauprojekt</code></li></ul></div>
+  <div class="card"><h4>⚙️ <span data-lang="de" class="visible">Technik</span><span data-lang="en">Technical</span><span data-lang="zh">技術</span></h4><ul><li><code>scoreboard_init</code></li><li><code>tuer_system</code></li><li><code>reset_system</code></li></ul></div>
+</div>
+```
 
-    <h3>💾 Struktur speichern und laden</h3>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-content">
-          <h4>Struktur speichern</h4>
-          <p>Platziere Strukturblock → Modus „Speichern" → Namen vergeben (z.B. <code>quiz_raum_1</code>) → Größe einstellen → Exportieren klicken.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-content">
-          <h4>Struktur laden</h4>
-          <p>Neuen Strukturblock → Modus „Laden" → Namen eingeben → „Laden" → Struktur erscheint als Vorschau → Bestätigen.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <h4>Per Befehl laden (automatisch)</h4>
-          <p>Für automatisches Laden per Command Block: <code>/structure load quiz_raum_1 ~ ~ ~</code></p>
-        </div>
-      </div>
-    </div>
-
-    <div class="code-block">
-      <div class="cb-label">📦 Struktur per Befehl laden</div>
-      <code><span class="cmd-comment"># Struktur an bestimmter Position laden</span>
-<span class="cmd-slash">/structure load</span> <span class="cmd-keyword">quiz_raum_1</span> <span class="cmd-value">40 65 20</span>
-
-<span class="cmd-comment"># Struktur mit Rotation laden</span>
-<span class="cmd-slash">/structure load</span> <span class="cmd-keyword">aufgaben_station</span> <span class="cmd-value">80 65 0</span> <span class="cmd-value">0_degrees none false true</span>
-
-<span class="cmd-comment"># Struktur löschen (für Reset)</span>
-<span class="cmd-slash">/structure delete</span> <span class="cmd-keyword">quiz_raum_1</span></code>
-    </div>
-
-    <h3>📁 Empfohlene Struktur-Bibliothek</h3>
-    <div class="card-grid">
-      <div class="card">
-        <h4>🏠 Basis-Module</h4>
-        <ul>
-          <li><code>spawn_halle</code> – Einstiegsbereich</li>
-          <li><code>npc_station</code> – Aufgaben-Station</li>
-          <li><code>quiz_raum</code> – Multiple-Choice-Raum</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h4>🎓 Lern-Module</h4>
-        <ul>
-          <li><code>lernzone_basis</code> – Leeres Modul</li>
-          <li><code>laboraufbau</code> – Experiment-Setup</li>
-          <li><code>bauprojekt</code> – Anwendungszone</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h4>⚙️ Technik-Module</h4>
-        <ul>
-          <li><code>scoreboard_init</code> – CB-Block-Setup</li>
-          <li><code>tuer_system</code> – Tür-Mechanik</li>
-          <li><code>reset_system</code> – Welt-Reset</li>
-        </ul>
-      </div>
-    </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════ -->
-  <!-- SECTION 9 -->
-  <!-- ══════════════════════════════════════════════ -->
+  <!-- ═══ SECTION 9 ═══ -->
+
   <div class="section" id="s9">
     <div class="section-header">
       <span class="section-num">9</span>
       <span class="section-icon">🎓</span>
-      <h2>Best Practices für den Unterricht</h2>
+      <h2>Best Practices</h2>
     </div>
 
-    <h3>👩‍🏫 Klassenmanagement</h3>
-    <div class="card-grid">
-      <div class="card green">
-        <h4>✅ Vor der Stunde</h4>
-        <ul>
-          <li>Welt auf Reset-Stand bringen</li>
-          <li>Alle Scoreboards auf 0 setzen</li>
-          <li>Test-Durchlauf als Member machen</li>
-          <li>Backup der Welt anlegen</li>
-        </ul>
-      </div>
-      <div class="card blue">
-        <h4>📋 Während der Stunde</h4>
-        <ul>
-          <li>Scoreboard-Übersicht im Blick</li>
-          <li>Fortschritt einzelner SuS prüfen</li>
-          <li>Bei Problemen: <code>/tp</code> nutzen</li>
-          <li>Chat-Log beobachten</li>
-        </ul>
-      </div>
-      <div class="card gold">
-        <h4>📊 Nach der Stunde</h4>
-        <ul>
-          <li>Scoreboard-Screenshot machen</li>
-          <li>Welt als Backup speichern</li>
-          <li>Feedback der SuS notieren</li>
-          <li>Schwachstellen dokumentieren</li>
-        </ul>
-      </div>
-    </div>
+```
+<div class="card-grid">
+  <div class="card green">
+    <h4>✅ <span data-lang="de" class="visible">Vor der Stunde</span><span data-lang="en">Before Class</span><span data-lang="zh">課前準備</span></h4>
+    <ul>
+      <li><span data-lang="de" class="visible">Welt auf Reset-Stand</span><span data-lang="en">World reset state</span><span data-lang="zh">世界重置狀態</span></li>
+      <li><span data-lang="de" class="visible">Scoreboards auf 0</span><span data-lang="en">Scoreboards to 0</span><span data-lang="zh">計分板歸零</span></li>
+      <li><span data-lang="de" class="visible">Backup anlegen</span><span data-lang="en">Create backup</span><span data-lang="zh">建立備份</span></li>
+    </ul>
+  </div>
+  <div class="card blue">
+    <h4>📋 <span data-lang="de" class="visible">Während der Stunde</span><span data-lang="en">During Class</span><span data-lang="zh">課堂進行中</span></h4>
+    <ul>
+      <li><span data-lang="de" class="visible">Scoreboard im Blick</span><span data-lang="en">Monitor scoreboards</span><span data-lang="zh">監控計分板</span></li>
+      <li><span data-lang="de" class="visible">Bei Problemen: /tp</span><span data-lang="en">Use /tp for issues</span><span data-lang="zh">遇到問題使用 /tp</span></li>
+      <li><span data-lang="de" class="visible">Chat beobachten</span><span data-lang="en">Watch chat log</span><span data-lang="zh">監看聊天記錄</span></li>
+    </ul>
+  </div>
+  <div class="card gold">
+    <h4>📊 <span data-lang="de" class="visible">Nach der Stunde</span><span data-lang="en">After Class</span><span data-lang="zh">課後整理</span></h4>
+    <ul>
+      <li><span data-lang="de" class="visible">Screenshot Scoreboard</span><span data-lang="en">Screenshot scoreboard</span><span data-lang="zh">截圖計分板</span></li>
+      <li><span data-lang="de" class="visible">Feedback notieren</span><span data-lang="en">Note feedback</span><span data-lang="zh">記錄回饋</span></li>
+      <li><span data-lang="de" class="visible">Backup speichern</span><span data-lang="en">Save backup</span><span data-lang="zh">儲存備份</span></li>
+    </ul>
+  </div>
+</div>
 
-    <h3>📡 Lehrkraft-Werkzeuge</h3>
-    <div class="code-block">
-      <div class="cb-label">🛠️ Nützliche Befehle für die Lehrkraft</div>
-      <code><span class="cmd-comment"># Alle SuS zu mir teleportieren (Sammeln)</span>
+<div class="code-block">
+  <div class="cb-label">🛠️ <span data-lang="de" class="visible">Lehrkraft-Befehle</span><span data-lang="en">Teacher Commands</span><span data-lang="zh">教師指令</span></div>
+  <code><span class="cmd-comment"># <span data-lang="de" class="visible">Alle SuS zu mir</span><span data-lang="en">All students to me</span><span data-lang="zh">所有學生傳送到我這裡</span></span>
+```
+
 <span class="cmd-slash">/tp</span> <span class="cmd-keyword">@a</span> <span class="cmd-value">@s</span>
 
-<span class="cmd-comment"># Spieler einfrieren (für Erklärungsphasen)</span>
+<span class="cmd-comment"># <span data-lang="de" class="visible">SuS einfrieren</span><span data-lang="en">Freeze students</span><span data-lang="zh">凍結學生</span></span>
 <span class="cmd-slash">/effect</span> <span class="cmd-keyword">@a</span> <span class="cmd-value">slowness 60 255 true</span>
+<span class="cmd-slash">/effect</span> <span class="cmd-keyword">@a</span> <span class="cmd-value">clear</span></code>
+</div>
 
-<span class="cmd-comment"># Einfrieren aufheben</span>
-<span class="cmd-slash">/effect</span> <span class="cmd-keyword">@a</span> <span class="cmd-value">clear</span>
-
-<span class="cmd-comment"># Alle Scoreboards zurücksetzen</span>
-<span class="cmd-slash">/scoreboard players set</span> <span class="cmd-keyword">@a</span> <span class="cmd-value">Fortschritt 0</span>
-<span class="cmd-slash">/scoreboard players set</span> <span class="cmd-keyword">@a</span> <span class="cmd-value">Aufgaben 0</span>
-
-<span class="cmd-comment"># Spawnpunkt aller auf Startpunkt</span>
-<span class="cmd-slash">/spawnpoint</span> <span class="cmd-keyword">@a</span> <span class="cmd-value">0 65 0</span>
-
-<span class="cmd-comment"># Alle zu Spawnpunkt</span>
-<span class="cmd-slash">/tp</span> <span class="cmd-keyword">@a</span> <span class="cmd-value">0 65 0</span></code>
-    </div>
-
-    <h3>🔐 Datenschutz & Sicherheit</h3>
-    <div class="callout warn">
-      <span class="callout-icon">⚠️</span>
-      <div>
-        <strong>Wichtige Hinweise:</strong>
-        <ul style="margin-top:8px;padding-left:16px;font-size:.85rem">
-          <li>Keine echten Namen der SuS als Scoreboard-Anzeigenamen verwenden</li>
-          <li>Kein Chat-Logging ohne Einwilligung der Eltern</li>
-          <li>Welten mit SuS-Daten nicht öffentlich teilen</li>
-          <li>Passwortschutz für Lehrkraft-Serverwelten aktivieren</li>
-        </ul>
-      </div>
-    </div>
-
-    <h3>♿ Barrierefreiheit</h3>
-    <div class="card">
-      <h4>🌈 Inklusionshinweise</h4>
-      <ul style="font-size:.85rem;padding-left:18px">
-        <li>Immer Schrift-Schilder UND NPC-Dialoge kombinieren (Leseschwäche)</li>
-        <li>Farbcodes NICHT als einziges Unterscheidungsmerkmal nutzen (Farbenblindheit)</li>
-        <li>Klare, kurze Anweisungen — kein langer Fließtext in der Welt</li>
-        <li>Tastaturzugängliche Wege (keine Parkour-Pflicht-Passagen)</li>
-        <li>Zeitlimits bei Quizzen großzügig setzen oder deaktivieren</li>
-      </ul>
-    </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════ -->
-  <!-- SECTION 10 -->
-  <!-- ══════════════════════════════════════════════ -->
+  <!-- ═══ SECTION 10 ═══ -->
+
   <div class="section" id="s10">
     <div class="section-header">
       <span class="section-num">10</span>
       <span class="section-icon">📦</span>
-      <h2>Export der Welt als .mcworld-Datei</h2>
+      <h2>
+        <span data-lang="de" class="visible">Export als .mcworld</span>
+        <span data-lang="en">Export as .mcworld</span>
+        <span data-lang="zh">匯出為 .mcworld</span>
+      </h2>
     </div>
 
-    <p>Der Export als <code>.mcworld</code> erlaubt die Weitergabe und Nutzung auf anderen Geräten — ideal für Klassen, die mit eigenen Tablets oder PCs arbeiten.</p>
-
-    <h3>📤 Export-Schritte (iOS/Android/Windows)</h3>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-content">
-          <h4>Welt verlassen</h4>
-          <p>Verlasse die Welt und gehe zum Hauptmenü. Wähle „Spielen" → Welt-Liste.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-content">
-          <h4>Bearbeiten-Menü öffnen</h4>
-          <p>Klicke auf den Stift (✏️) neben deiner Welt → „Welt exportieren".</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <h4>Datei speichern</h4>
-          <p>Wähle Speicherort. Die Datei erhält die Endung <code>.mcworld</code> (ca. 1–50 MB je nach Weltgröße).</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <div class="step-content">
-          <h4>Verteilen</h4>
-          <p>Teile die Datei per Teams, Moodle, Google Classroom, USB oder QR-Code. SuS öffnen die Datei → automatischer Import in Minecraft Education.</p>
-        </div>
-      </div>
-    </div>
-
-    <h3>🖥️ Export unter Windows (Dateipfad)</h3>
-    <div class="code-block">
-      <div class="cb-label">📁 Weltdateien finden (Windows)</div>
-      <code><span class="cmd-comment"># Minecraft Education Weltordner:</span>
-<span class="cmd-value">%LOCALAPPDATA%\Packages\Microsoft.MinecraftEducationEdition_8wekyb3d8bbwe\</span>
-<span class="cmd-value">LocalState\games\com.mojang\minecraftWorlds\</span>
-
-<span class="cmd-comment"># Ordner-Inhalt der Welt kopieren und umbenennen:</span>
-<span class="cmd-value">MeineWelt\</span>
-<span class="cmd-value">  ├── level.dat        ← Welteinstellungen</span>
-<span class="cmd-value">  ├── level.dat_old</span>
-<span class="cmd-value">  ├── db\              ← Chunk-Daten</span>
-<span class="cmd-value">  └── world_icon.jpeg  ← Vorschaubild</span>
-
-<span class="cmd-comment"># Ordner zippen und in .mcworld umbenennen!</span></code>
-    </div>
-
-    <h3>✅ Checkliste vor dem Export</h3>
-    <div class="card green">
-      <h4>📋 Export-Checkliste</h4>
-      <ul style="font-size:.85rem;padding-left:18px;line-height:1.9">
-        <li>☐ Alle Scoreboards auf 0 zurückgesetzt</li>
-        <li>☐ Alle SuS aus der Welt entfernt</li>
-        <li>☐ Testdurchlauf als neuer Spieler gemacht</li>
-        <li>☐ Alle Türen sind geschlossen (Ausgangszustand)</li>
-        <li>☐ Spawnpunkt korrekt gesetzt (0, 65, 0)</li>
-        <li>☐ Weltname sprechend (z.B. <code>Klasse5_Aggregatzustaende_v2</code>)</li>
-        <li>☐ Backup der originalen Welt vorhanden</li>
-        <li>☐ .mcworld-Datei auf einem Test-Gerät importiert</li>
-      </ul>
-    </div>
-
-    <div class="callout tip">
-      <span class="callout-icon">💡</span>
-      <div><strong>Versionierung:</strong> Bennene Exporte mit Datum: <code>Lernwelt_Physik_2024-03-15_v1.mcworld</code>. So kannst du immer auf eine funktionierende Version zurückgreifen.</div>
+```
+<div class="steps">
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <h4><span data-lang="de" class="visible">Welt verlassen</span><span data-lang="en">Leave the World</span><span data-lang="zh">離開世界</span></h4>
+      <p><span data-lang="de" class="visible">Hauptmenü → Spielen → Welt-Liste.</span><span data-lang="en">Main menu → Play → World list.</span><span data-lang="zh">主選單 → 遊玩 → 世界清單。</span></p>
     </div>
   </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <h4><span data-lang="de" class="visible">Bearbeiten-Menü</span><span data-lang="en">Edit Menu</span><span data-lang="zh">編輯選單</span></h4>
+      <p><span data-lang="de" class="visible">Stift ✏️ neben der Welt → "Welt exportieren".</span><span data-lang="en">Pencil ✏️ next to world → "Export World".</span><span data-lang="zh">點擊世界旁的 ✏️ → 「匯出世界」。</span></p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <h4><span data-lang="de" class="visible">Datei speichern</span><span data-lang="en">Save File</span><span data-lang="zh">儲存檔案</span></h4>
+      <p><span data-lang="de" class="visible">Speicherort wählen → <code>.mcworld</code>-Datei (1–50 MB).</span><span data-lang="en">Choose location → <code>.mcworld</code> file (1–50 MB).</span><span data-lang="zh">選擇儲存位置 → <code>.mcworld</code> 檔案（1–50 MB）。</span></p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <h4><span data-lang="de" class="visible">Verteilen</span><span data-lang="en">Distribute</span><span data-lang="zh">發佈分享</span></h4>
+      <p><span data-lang="de" class="visible">Per Teams, Moodle, Google Classroom oder QR-Code.</span><span data-lang="en">Via Teams, Moodle, Google Classroom, or QR code.</span><span data-lang="zh">透過 Teams、Moodle、Google Classroom 或 QR 碼分享。</span></p>
+    </div>
+  </div>
+</div>
 
-  <!-- ══════════════════════════════════════════════ -->
-  <!-- BEFEHLS-ÜBERSICHT -->
-  <!-- ══════════════════════════════════════════════ -->
+<div class="card green">
+  <h4>📋 <span data-lang="de" class="visible">Export-Checkliste</span><span data-lang="en">Export Checklist</span><span data-lang="zh">匯出檢查清單</span></h4>
+  <ul style="font-size:.83rem;padding-left:16px;line-height:2">
+    <li>☐ <span data-lang="de" class="visible">Alle Scoreboards auf 0</span><span data-lang="en">All scoreboards reset to 0</span><span data-lang="zh">所有計分板歸零</span></li>
+    <li>☐ <span data-lang="de" class="visible">Alle SuS aus der Welt entfernt</span><span data-lang="en">All students removed from world</span><span data-lang="zh">所有學生已離開世界</span></li>
+    <li>☐ <span data-lang="de" class="visible">Testdurchlauf als neuer Spieler</span><span data-lang="en">Test run as new player</span><span data-lang="zh">以新玩家身份進行測試</span></li>
+    <li>☐ <span data-lang="de" class="visible">Alle Türen geschlossen</span><span data-lang="en">All doors closed</span><span data-lang="zh">所有門已關閉</span></li>
+    <li>☐ <span data-lang="de" class="visible">Spawnpunkt korrekt (0, 65, 0)</span><span data-lang="en">Spawn point correct (0, 65, 0)</span><span data-lang="zh">出生點正確 (0, 65, 0)</span></li>
+    <li>☐ <span data-lang="de" class="visible">Backup vorhanden</span><span data-lang="en">Backup available</span><span data-lang="zh">備份已準備好</span></li>
+  </ul>
+</div>
+
+<div class="callout tip">
+  <span class="callout-icon">💡</span>
+  <div>
+    <span data-lang="de" class="visible"><strong>Versionierung:</strong> Benenne Exporte mit Datum: <code>Lernwelt_Physik_2024-03-15_v1.mcworld</code></span>
+    <span data-lang="en"><strong>Versioning:</strong> Name exports with date: <code>LearningWorld_Physics_2024-03-15_v1.mcworld</code></span>
+    <span data-lang="zh"><strong>版本控制：</strong>用日期命名匯出檔案：<code>學習世界_物理_2024-03-15_v1.mcworld</code></span>
+  </div>
+</div>
+```
+
+  </div>
+
+  <!-- ═══ COMMAND REFERENCE ═══ -->
+
   <div class="section" id="commands">
     <div class="section-header">
-      <span class="section-num">📋</span>
+      <span class="section-num" style="font-size:1.1rem">📋</span>
       <span class="section-icon">💻</span>
-      <h2>Schnellreferenz: Wichtigste Befehle</h2>
+      <h2>
+        <span data-lang="de" class="visible">Schnellreferenz</span>
+        <span data-lang="en">Quick Reference</span>
+        <span data-lang="zh">快速參考</span>
+      </h2>
     </div>
 
-    <table>
-      <thead><tr><th>Kategorie</th><th>Befehl</th><th>Beschreibung</th></tr></thead>
-      <tbody>
-        <tr><td>🎮 Spielmodus</td><td><code>/gamemode adventure @a</code></td><td>SuS in Abenteuermodus</td></tr>
-        <tr><td>🎮 Spielmodus</td><td><code>/gamemode creative @s</code></td><td>Lehrkraft in Kreativmodus</td></tr>
-        <tr><td>📊 Scoreboard</td><td><code>/scoreboard objectives add X dummy "Label"</code></td><td>Neues Scoreboard</td></tr>
-        <tr><td>📊 Scoreboard</td><td><code>/scoreboard players add @a X 1</code></td><td>+1 Punkt für alle</td></tr>
-        <tr><td>📊 Scoreboard</td><td><code>/scoreboard players set @a X 0</code></td><td>Alle auf 0 setzen</td></tr>
-        <tr><td>🚀 Teleport</td><td><code>/tp @a 0 65 0</code></td><td>Alle zu Koordinate</td></tr>
-        <tr><td>🚀 Teleport</td><td><code>/tp @a @s</code></td><td>Alle zu Lehrkraft</td></tr>
-        <tr><td>🧱 Blöcke</td><td><code>/fill X1 Y1 Z1 X2 Y2 Z2 barrier</code></td><td>Barriere-Box</td></tr>
-        <tr><td>🧱 Blöcke</td><td><code>/setblock ~ ~ ~ air</code></td><td>Block entfernen</td></tr>
-        <tr><td>👤 NPC</td><td><code>/summon npc ~ ~ ~ "Name"</code></td><td>NPC spawnen</td></tr>
-        <tr><td>💬 Nachrichten</td><td><code>/title @a title {"text":"X"}</code></td><td>Titel einblenden</td></tr>
-        <tr><td>💬 Nachrichten</td><td><code>/tellraw @a {"text":"X","color":"green"}</code></td><td>Chat-Nachricht</td></tr>
-        <tr><td>⏸️ Pause</td><td><code>/effect @a slowness 60 255 true</code></td><td>SuS einfrieren</td></tr>
-        <tr><td>⏸️ Pause</td><td><code>/effect @a clear</code></td><td>Effekte entfernen</td></tr>
-        <tr><td>🏠 Spawn</td><td><code>/spawnpoint @a 0 65 0</code></td><td>Spawn setzen</td></tr>
-        <tr><td>📦 Struktur</td><td><code>/structure load Name X Y Z</code></td><td>Struktur laden</td></tr>
-        <tr><td>🌍 Welt</td><td><code>/worldborder set 200</code></td><td>Weltgrenze</td></tr>
-        <tr><td>⚡ Fähigkeiten</td><td><code>/ability @a mayfly false</code></td><td>Fliegen sperren</td></tr>
-      </tbody>
-    </table>
+```
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th><span data-lang="de" class="visible">Kategorie</span><span data-lang="en">Category</span><span data-lang="zh">分類</span></th>
+        <th><span data-lang="de" class="visible">Befehl</span><span data-lang="en">Command</span><span data-lang="zh">指令</span></th>
+        <th><span data-lang="de" class="visible">Beschreibung</span><span data-lang="en">Description</span><span data-lang="zh">說明</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>🎮</td><td><code>/gamemode adventure @a</code></td><td><span data-lang="de" class="visible">SuS → Abenteuer</span><span data-lang="en">Students → Adventure</span><span data-lang="zh">學生 → 冒險模式</span></td></tr>
+      <tr><td>🎮</td><td><code>/gamemode creative @s</code></td><td><span data-lang="de" class="visible">Lehrkraft → Kreativ</span><span data-lang="en">Teacher → Creative</span><span data-lang="zh">教師 → 創造模式</span></td></tr>
+      <tr><td>📊</td><td><code>/scoreboard objectives add X dummy</code></td><td><span data-lang="de" class="visible">Scoreboard erstellen</span><span data-lang="en">Create scoreboard</span><span data-lang="zh">建立計分板</span></td></tr>
+      <tr><td>📊</td><td><code>/scoreboard players add @a X 1</code></td><td><span data-lang="de" class="visible">+1 Punkt alle</span><span data-lang="en">+1 point all</span><span data-lang="zh">所有人 +1 分</span></td></tr>
+      <tr><td>🚀</td><td><code>/tp @a @s</code></td><td><span data-lang="de" class="visible">Alle zu Lehrkraft</span><span data-lang="en">All to teacher</span><span data-lang="zh">所有人傳送到教師</span></td></tr>
+      <tr><td>🚀</td><td><code>/tp @a 0 65 0</code></td><td><span data-lang="de" class="visible">Alle zu Spawn</span><span data-lang="en">All to spawn</span><span data-lang="zh">所有人傳送到出生點</span></td></tr>
+      <tr><td>🧱</td><td><code>/fill X1 Y1 Z1 X2 Y2 Z2 barrier</code></td><td><span data-lang="de" class="visible">Barriere-Box</span><span data-lang="en">Barrier box</span><span data-lang="zh">屏障方塊區域</span></td></tr>
+      <tr><td>👤</td><td><code>/summon npc ~ ~ ~ "Name"</code></td><td><span data-lang="de" class="visible">NPC spawnen</span><span data-lang="en">Spawn NPC</span><span data-lang="zh">生成 NPC</span></td></tr>
+      <tr><td>💬</td><td><code>/title @a title {"text":"X"}</code></td><td><span data-lang="de" class="visible">Titel einblenden</span><span data-lang="en">Show title</span><span data-lang="zh">顯示標題</span></td></tr>
+      <tr><td>⏸️</td><td><code>/effect @a slowness 60 255 true</code></td><td><span data-lang="de" class="visible">SuS einfrieren</span><span data-lang="en">Freeze students</span><span data-lang="zh">凍結學生</span></td></tr>
+      <tr><td>⏸️</td><td><code>/effect @a clear</code></td><td><span data-lang="de" class="visible">Effekte entfernen</span><span data-lang="en">Remove effects</span><span data-lang="zh">移除效果</span></td></tr>
+      <tr><td>📦</td><td><code>/structure load Name X Y Z</code></td><td><span data-lang="de" class="visible">Struktur laden</span><span data-lang="en">Load structure</span><span data-lang="zh">載入結構</span></td></tr>
+      <tr><td>🌍</td><td><code>/worldborder set 200</code></td><td><span data-lang="de" class="visible">Weltgrenze</span><span data-lang="en">World border</span><span data-lang="zh">世界邊界</span></td></tr>
+      <tr><td>⚡</td><td><code>/ability @a mayfly false</code></td><td><span data-lang="de" class="visible">Fliegen sperren</span><span data-lang="en">Disable flying</span><span data-lang="zh">停用飛行</span></td></tr>
+    </tbody>
+  </table>
+</div>
+```
+
   </div>
 
 </main>
 </div>
 
 <footer>
-  <strong>Minecraft Education – Professionelle Lernwelten</strong> · Lehrkräfte-Handbuch v1.0<br>
-  Erstellt mit ❤️ für den Unterricht · Kein offizielles Microsoft/Mojang-Dokument · Minecraft ist eine Marke von Microsoft
+  <strong>Minecraft Education · <span data-lang="de" class="visible">Professionelle Lernwelten</span><span data-lang="en">Professional Learning Worlds</span><span data-lang="zh">專業學習世界</span></strong> · v1.0<br>
+  <span style="opacity:.45">
+    <span data-lang="de" class="visible">Erstellt mit ❤️ für den Unterricht · Kein offizielles Microsoft/Mojang-Dokument</span>
+    <span data-lang="en">Made with ❤️ for education · Not an official Microsoft/Mojang document</span>
+    <span data-lang="zh">以 ❤️ 為教育而製作 · 非 Microsoft/Mojang 官方文件</span>
+  </span>
 </footer>
 
 <script>
-  // Highlight active nav item on scroll
-  const sections = document.querySelectorAll('.section, #intro');
-  const navLinks = document.querySelectorAll('nav.sidebar a');
+/* ── LANGUAGE SYSTEM ── */
+let currentLang = 'de';
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        navLinks.forEach(l => l.classList.remove('active'));
-        const id = entry.target.id;
-        const link = document.querySelector(`nav.sidebar a[href="#${id}"]`);
-        if (link) link.classList.add('active');
-      }
+function setLang(lang) {
+  currentLang = lang;
+
+  // Update all data-lang inline spans
+  document.querySelectorAll('[data-lang]').forEach(el => {
+    el.classList.toggle('visible', el.dataset.lang === lang);
+  });
+
+  // Update block-level containers (grid, flex, block)
+  ['block-lang','grid-lang','flex-lang'].forEach(cls => {
+    document.querySelectorAll('.' + cls).forEach(el => {
+      const matches = [...el.classList].some(c => c === lang);
+      el.classList.toggle('visible', matches);
     });
-  }, { rootMargin: '-60px 0px -70% 0px' });
+  });
 
-  sections.forEach(s => observer.observe(s));
+  // Update lang buttons
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.toLowerCase().includes(lang));
+  });
+
+  // Update html lang attribute
+  document.documentElement.lang = lang === 'zh' ? 'zh-TW' : lang;
+}
+
+/* ── SIDEBAR TOGGLE (mobile) ── */
+function toggleSidebar() {
+  const sidebar  = document.getElementById('sidebar');
+  const overlay  = document.getElementById('overlay');
+  const hamburger = document.getElementById('hamburger');
+  const open = sidebar.classList.toggle('open');
+  overlay.classList.toggle('open', open);
+  hamburger.classList.toggle('open', open);
+}
+
+function closeSidebar() {
+  const sidebar  = document.getElementById('sidebar');
+  const overlay  = document.getElementById('overlay');
+  const hamburger = document.getElementById('hamburger');
+  if (window.innerWidth <= 768) {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('open');
+    hamburger.classList.remove('open');
+  }
+}
+
+/* ── ACTIVE NAV ON SCROLL ── */
+const sections = document.querySelectorAll('.section, #intro');
+const navLinks = document.querySelectorAll('nav.sidebar a');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const link = document.querySelector(`nav.sidebar a[href="#${entry.target.id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { rootMargin: '-80px 0px -65% 0px' });
+
+sections.forEach(s => observer.observe(s));
+
+/* ── XP BAR ANIMATION ── */
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const bar = document.getElementById('xpbar');
+    if (bar) bar.style.width = '40%';
+  }, 400);
+});
+
+/* ── BLOCK HOVER GLOW ── */
+document.querySelectorAll('.pv-block.done').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    el.style.boxShadow = '0 0 14px rgba(93,187,52,.6), 3px 3px 0 rgba(0,0,0,.4)';
+  });
+  el.addEventListener('mouseleave', () => {
+    el.style.boxShadow = '3px 3px 0 rgba(0,0,0,.4)';
+  });
+});
+
+/* ── CLOSE SIDEBAR ON RESIZE ── */
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 768) {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+  }
+});
 </script>
+
 </body>
 </html>
